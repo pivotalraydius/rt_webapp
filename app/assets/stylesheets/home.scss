@@ -49,24 +49,36 @@
   z-index: 0; /* Set z-index to 0 as it will be on a layer below the contact form */
 }
 
-.from_to_wrapper{
+.direction_wrapper{
 
-  align-items: center;
-  display: flex;
   justify-content: space-between;
-
-  padding: 5px;
+  padding:10px;
   border: 1px solid purple;
   background-color: rgba(250, 250, 250, 0.95);
   border: 1px solid #e0e0e0;
   border-radius: 2px;
+}
+.from_to_wrapper{
+
+  //align-items: center;
+  //display: flex;
+
+}
+.horizontal_align{
+  align-items: center;
+  display: flex;
+}
+.from_to_control{
+  //align-items: center;
+  //display: flex;
+  margin-bottom: 10px;
 }
 
 
 .direction_form{
   flex-grow: 1;
   margin: 0 10px;
-  margin-top: 15px;
+
   input{
     margin-bottom: 10px;
   }
@@ -75,4 +87,40 @@
 #swapIcon{
   cursor: pointer;
   z-index: 1;
+}
+
+#setTime{
+  width: 100px;
+  text-align: center;
+}
+.leave{
+  margin-bottom: 0px !important;
+  select{
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    box-shadow: none;
+    padding: 4px !important;
+    width: 105px;
+
+
+  }
+  select:hover, select:focus,select:active{
+    text-decoration: none;
+    border:none;
+    box-shadow: none;
+    outline:none;
+  }
+}
+.leave::after{
+  background: rgba(0, 0, 0, 0) url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAAZElEQVR42mPILu/em1ne7c0ABSA2SIxhxYbdx3Mqun9lVXR5gDCIDRJj+P//f1zfjGXvcyp6foAwiA0SA2t//fr97MqWaT8qmqf8BLFhxoJ0CV66ducYEB8HsRmQAVDAAIRhfAAoF0WJojxQVAAAAABJRU5ErkJggg==") no-repeat scroll 0 0;
+  content: "";
+  display: inline-block;
+  height: 6px;
+  margin-top: -2px;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 6px;
 }
