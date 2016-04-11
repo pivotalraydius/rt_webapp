@@ -43,7 +43,35 @@ var roundtripMap = {
             $inputC.val($inputD.val());
             $inputD.val(temp);
 
-        }) ;
+        })
+
+
+
+        $("#to_input").keydown(function (e) { if (e.keyCode == 13) {
+            var from = $("#from_input").val();
+            var to = $("#to_input").val();
+
+            if(from.length && to.length) {
+                console.log("Enter was pressed was presses");
+                $( "#search_btn" ).trigger( "click" );
+            }else{
+                alert("enter both from and to address")
+            }
+
+        } });
+
+
+        $("#from_input").keydown(function (e) { if (e.keyCode == 13) {
+            var from = $("#from_input").val();
+            var to = $("#to_input").val();
+
+            if(from.length && to.length) {
+                console.log("Enter was pressed was presses");
+                $( "#search_btn" ).trigger( "click" );
+            }
+
+        } });
+
 
         function showPosition(position) {
             lat = position.coords.latitude;
@@ -55,6 +83,33 @@ var roundtripMap = {
 
 
         }
+
+        $("#clear_btn").on("click", function(){
+            $("#from_input").val('');
+            $("#to_input").val('');
+            $('#setTime').timepicker('setTime', new Date());
+        })
+
+        $("#search_btn").on("click", function(){
+
+            var $inputC = $("#from_input");
+            var $inputD = $("#to_input");
+
+            $("#from_address").text($inputC.val());
+            $("#to_address").text($inputD.val());
+            $("#direction_result_wrapper").show();
+            $("#myTabContent").show();
+            $("#direction_query_wrapper").hide()
+
+        })
+
+        $("#menuBack").on("click", function(){
+
+            $("#direction_result_wrapper").hide();
+            $("#myTabContent").hide();
+            $("#direction_query_wrapper").show()
+
+        })
 
         var  from_autocomplete, to_autocomplete;
 
