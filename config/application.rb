@@ -13,3 +13,8 @@ module RtWebapp
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+
+module GoogleAPI
+  Google_Key = "AIzaSyCmCjZVJvI5h2Qg7XcdI9jTFjyK-IgzyQk"
+end
