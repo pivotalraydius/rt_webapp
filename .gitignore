@@ -15,3 +15,27 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+
+*.rbc
+*.sassc
+.sass-cache
+capybara-*.html
+.rspec
+/.bundle
+/vendor/bundle
+/log/*
+/tmp/*
+/db/*.sqlite3
+/db/schema.rb
+/public/system/*
+/public/assets/*
+/coverage/
+/spec/tmp/*
+**.orig
+rerun.txt
+pickle-email-*.html
+/config/database.yml
+/config/facebook.yml
+.DS_Store
+/gems/*
+.idea/*
