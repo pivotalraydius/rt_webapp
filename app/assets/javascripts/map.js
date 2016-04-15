@@ -92,14 +92,42 @@ var roundtripMap = {
 
         $("#search_btn").on("click", function(){
 
-            var $inputC = $("#from_input");
-            var $inputD = $("#to_input");
+            var startadd = $("#from_input").val();
+            var endaddd = $("#to_input").val();
 
-            $("#from_address").text($inputC.val());
-            $("#to_address").text($inputD.val());
+            $("#from_address").text(startadd);
+            $("#to_address").text(endaddd);
             $("#direction_result_wrapper").show();
             $("#myTabContent").show();
-            $("#direction_query_wrapper").hide()
+            $("#direction_query_wrapper").hide();
+
+            $.ajax({
+                url: "/api/roundtrip/get_route_by_travelMode",
+                type: 'get',
+                data: {start_address: startadd,end_address: endaddd, mode: 'transit'},
+                success: function(data) {
+
+                    $.each(data.fastest_routes,function(i) {
+
+                        console.log(data.fastest_routes[i]["legs"])
+
+                        legs = data.fastest_routes[i]["legs"]
+                        total_estimate_price = data.fastest_routes[i]["total_estimate_price"]
+
+                        duration = legs[0]["duration"]
+                        steps = legs[0]["steps"]
+                        console.log("route: ",i)
+                        console.log(duration["text"])
+                        console.log(steps.length)
+                        console.log(total_estimate_price)
+
+                    });
+
+                },
+                error: function() {
+                    alert('There has been an error, please alert us immediately');
+                }
+            });
 
         })
 

@@ -1,0 +1,39 @@
+.walk1 {
+  background: url(http://x1.sdimgs.com/img/journey/sum_icon/walk1.png) repeat scroll 0 0 transparent;
+}
+
+.arrow {
+  padding: 5px;
+  background: url(http://x1.sdimgs.com/img/journey/sum_icon/arrow.png) repeat scroll 0 0 transparent;
+}
+
+div.busicon {
+  background: url(http://x1.sdimgs.com/img/journey/busicon/img-lft.png) no-repeat left;
+  height: 19px;
+  padding-left: 19px;
+  float: left;
+  font: bold 11px Arial, Helvetica, sans-serif;
+  color: #FFF;
+}
+
+div.busicon span {
+  float: left;
+  display: block;
+  height: 19px;
+  padding-top: 3px;
+  border-top: 1px solid #369;
+  border-bottom: 1px solid #369;
+  border-right: 15px solid none;
+  background: rgba(97, 101, 164, 0.9);
+  padding-right: 5px;
+  text-align: center;
+}
+
+
+div.busicon b {
+  float: left;
+  background: url(http://x1.sdimgs.com/img/journey/busicon/img-rgt.png);
+  height: 19px;
+  width: 5px;
+  display: block;
+}
