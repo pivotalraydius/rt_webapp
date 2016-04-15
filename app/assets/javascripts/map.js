@@ -102,9 +102,13 @@ var roundtripMap = {
                 data: {start_address: startadd,end_address: endaddd, mode: 'transit'},
                 success: function(html) {
                     var htmlobject = $(html);
-                    var output = htmlobject.find("#route_transit_info")[0];
+                    var output = htmlobject.find("#fast_route_transit_info")[0];
                     var updateContent = new XMLSerializer().serializeToString(output);
-                    $("#route_transit_info").replaceWith(updateContent);
+                    $("#fast_route_transit_info").replaceWith(updateContent);
+
+                    var output1 = htmlobject.find("#cheap_route_transit_info")[0];
+                    var updateContent1 = new XMLSerializer().serializeToString(output1);
+                    $("#cheap_route_transit_info").replaceWith(updateContent1);
 
                     $("#from_address").text(startadd);
                     $("#to_address").text(endaddd);
