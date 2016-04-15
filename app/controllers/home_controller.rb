@@ -348,7 +348,7 @@ class HomeController < ApplicationController
 
         end
       end
-      tempHash[:total_transit_price] = est_price
+      tempHash[:total_transit_price] = est_price.round(2)
 
       route.merge!(tempHash)
     end
