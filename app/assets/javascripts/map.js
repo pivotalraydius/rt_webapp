@@ -95,33 +95,22 @@ var roundtripMap = {
             var startadd = $("#from_input").val();
             var endaddd = $("#to_input").val();
 
-            $("#from_address").text(startadd);
-            $("#to_address").text(endaddd);
-            $("#direction_result_wrapper").show();
-            $("#myTabContent").show();
-            $("#direction_query_wrapper").hide();
+
 
             $.ajax({
-                url: "/api/roundtrip/get_route_by_travelMode",
                 type: 'get',
                 data: {start_address: startadd,end_address: endaddd, mode: 'transit'},
-                success: function(data) {
+                success: function(html) {
+                    var htmlobject = $(html);
+                    var output = htmlobject.find("#route_transit_info")[0];
+                    var updateContent = new XMLSerializer().serializeToString(output);
+                    $("#route_transit_info").replaceWith(updateContent);
 
-                    $.each(data.fastest_routes,function(i) {
-
-                        console.log(data.fastest_routes[i]["legs"])
-
-                        legs = data.fastest_routes[i]["legs"]
-                        total_estimate_price = data.fastest_routes[i]["total_estimate_price"]
-
-                        duration = legs[0]["duration"]
-                        steps = legs[0]["steps"]
-                        console.log("route: ",i)
-                        console.log(duration["text"])
-                        console.log(steps.length)
-                        console.log(total_estimate_price)
-
-                    });
+                    $("#from_address").text(startadd);
+                    $("#to_address").text(endaddd);
+                    $("#direction_result_wrapper").show();
+                    $("#myTabContent").show();
+                    $("#direction_query_wrapper").hide();
 
                 },
                 error: function() {

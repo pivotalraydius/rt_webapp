@@ -62,7 +62,8 @@
   #myTabContent.tab-content{style:'display:none'}
     #sooner.tab-pane.fade.active.in{"aria-labelledby" => "sooner-tab", :role => "tabpanel"}
       %p To show the fastest routes
-      =render "home/transit_info"
+      %div#route_transit_info
+        =render "home/transit_info"
     #cheaper.tab-pane.fade{"aria-labelledby" => "cheaper-tab", :role => "tabpanel"}
       %p To show the cheapest routes
 

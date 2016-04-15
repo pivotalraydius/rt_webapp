@@ -196,12 +196,6 @@ class Api::RoundtripController < ApplicationController
             p price3
           end
 
-          # p "total estiamte price"
-          totalestimateprice = price1 + price2 + price3
-          p totalestimateprice = totalestimateprice.round(2)
-          tempHash[:total_estimate_price] = totalestimateprice
-          route.merge!(tempHash)
-
         elsif step[:travel_mode] == "DRIVING"
 
           drivingHash = Hash.new
@@ -236,7 +230,7 @@ class Api::RoundtripController < ApplicationController
                           waiting_charge: @waiting_charge, peek_hour_charge: @peekhour_charge,
                           late_hour_charge: @latehour_charge, public_holidy_charge: @pbHoliday_charge ,
                           location_charge: @location_charge}
-          tempHash[:total_estimate_price] = totalestimateprice
+          tempHash[:total_transit_price] = totalestimateprice
 
           route.merge!(tempHash)
           route.merge!(drivingHash)
@@ -336,6 +330,21 @@ class Api::RoundtripController < ApplicationController
       p total_walking_distance.round(1)
       p "+++++++++++++"
 
+      est_price =0.0
+      route[:legs][0][:steps].each_with_index do |step,s_index|
+        if step[:travel_mode] == "TRANSIT"
+
+
+          step[:distance][:estimate_price]
+
+          est_price = est_price + step[:distance][:estimate_price]
+
+        end
+      end
+      tempHash[:total_transit_price] = est_price
+
+      route.merge!(tempHash)
+
     end
 
 
@@ -347,10 +356,10 @@ class Api::RoundtripController < ApplicationController
 
       0.upto(fastest_route.size-2) do |i|
 
-        fastest_route[i][:total_estimate_price]
-        fastest_route[i+1][:total_estimate_price]
+        fastest_route[i][:total_transit_price]
+        fastest_route[i+1][:total_transit_price]
 
-        if fastest_route[i][:total_estimate_price] > fastest_route[i+1][:total_estimate_price]
+        if fastest_route[i][:total_transit_price] > fastest_route[i+1][:total_transit_price]
           fastest_route[i] , fastest_route[i+1] = fastest_route[i+1], fastest_route[i] # swap values
           swapped = true
         end
@@ -365,6 +374,8 @@ class Api::RoundtripController < ApplicationController
     cheapest_route.each do |route|
       p route[:total_estimate_price]
     end
+
+
 
     render json: {fastest_routes: fastest_route,cheapest_routes: cheapest_route}
 
