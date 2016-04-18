@@ -184,3 +184,13 @@ ul#directions_mode li span:hover {
 .active_mode{
    background: rgb(88,184,87) !important;
 }
+
+.transit_table{
+
+}
+
+/* Define the hover highlight color for the table row */
+.transit_table tr:hover {
+  background-color: #ffff99 !important;
+}
+

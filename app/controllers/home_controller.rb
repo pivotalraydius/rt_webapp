@@ -15,6 +15,18 @@ class HomeController < ApplicationController
     if params[:mode]
       get_route_direction(mode,transit_mode,start_latitude,start_longitude,end_latitude ,end_longitude,start_address,end_address)
     end
+
+    if params[:route_id]
+      @fastest_route =  session[:fastest_route]
+      @fastest_route.each do |route|
+        if route[:id] == params[:route_id]
+          p "selected route"
+          p route
+
+        end
+      end
+    end
+
   end
 
   def get_route_direction(mode,transit_mode,start_latitude,start_longitude,end_latitude ,end_longitude,start_address,end_address)
@@ -102,6 +114,11 @@ class HomeController < ApplicationController
 
 
     @fastest_route.each_with_index do |route, r_index|
+      route_index = r_index+1
+      tempid = Hash.new
+      tempid[:id] = route_index
+      route.merge!(tempid)
+
       steps = route[:legs][0][:steps]
       steps.each_with_index do |step,s_index|
 
@@ -249,85 +266,6 @@ class HomeController < ApplicationController
 
           total_frist_walking_and_transit = 0.0
 
-          # if s_index == 0
-          #   puts "current index...#{r_index},#{s_index}"
-          #
-          #   p "first walking distance"
-          #   # p "check walking and  transit mode"
-          #   first_walking = steps[s_index]
-          #   p first_distance = (steps[s_index][:distance][:value]* 0.001).round(1)
-          #
-          #   # p "second transit"
-          #   second_transit = steps[s_index+1]
-          #   # second_distance = (steps[s_index+1][:distance][:value]* 0.001).round(1)
-          #
-          #   start_location_lat = steps[s_index+1][:start_location][:lat]
-          #   start_location_lng = steps[s_index+1][:start_location][:lng]
-          #   end_location_lat = steps[s_index+1][:end_location][:lat]
-          #   end_location_lng = steps[s_index+1][:end_location][:lng]
-          #
-          #   p "second walking distance"
-          #   second_route = gmaps.directions(
-          #       "#{start_location_lat},#{start_location_lng}",
-          #       "#{end_location_lat},#{end_location_lng}",
-          #       mode: "walking",
-          #       alternatives: false)
-          #
-          #   p second_distance = (second_route.first[:legs][0][:distance][:value]* 0.001).round(1)
-          #
-          #
-          #   sub_route = Hash.new
-          #
-          #   if start_address.present?
-          #     walking_route = gmaps.directions(
-          #         start_address,
-          #         "#{end_location_lat},#{end_location_lng}",
-          #         mode: "walking",
-          #         alternatives: false)
-          #
-          #     transit_route = gmaps.directions(
-          #         "#{end_location_lat},#{end_location_lng}",
-          #         end_address,
-          #         mode: mode,
-          #         alternatives: false)
-          #
-          #   else
-          #     walking_route = gmaps.directions(
-          #         "#{start_latitude},#{start_longitude}",
-          #         "#{end_location_lat},#{end_location_lng}",
-          #         mode: "walking",
-          #         alternatives: false)
-          #
-          #     transit_route = gmaps.directions(
-          #         "#{end_location_lat},#{end_location_lng}",
-          #         "#{end_latitude},#{end_longitude}",
-          #         mode: mode,
-          #         alternatives: false)
-          #   end
-          #
-          #   transit_route
-          #
-          #   p "walking_route"
-          #
-          #
-          #   p "total_frist_walking_and_transit"
-          #   p total_frist_walking_and_transit = first_distance + second_distance
-          #
-          #   tempHash = Hash.new
-          #   if total_frist_walking_and_transit <= 2
-          #     # p "calculate route for green options"
-          #     walking_route = walking_route.first
-          #     transit_route = transit_route.first
-          #     tempHash[:have_green_option] = "yes"
-          #     sub_route[:sub_walking_route] = walking_route
-          #     sub_route[:sub_transit_route] = transit_route
-          #   else
-          #     tempHash[:have_green_option] = "no"
-          #
-          #   end
-          #   route.merge!(tempHash)
-          #   route.merge!(sub_route)
-          # end
 
         end
 
@@ -356,6 +294,9 @@ class HomeController < ApplicationController
     # @cheapest_route.each do |route|
     #   p route[:total_transit_price]
     # end
+
+    #
+    # session[:fastest_route] = @fastest_route
 
   end
 

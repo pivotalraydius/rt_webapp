@@ -266,7 +266,40 @@ var roundtripMap = {
 
         //window.search = search
 
+        function draw_bustrain_line(route_id){
+            alert(route_id)
+            $.ajax({
+                type: 'get',
+                data: {route_id: route_id},
+                success: function(html) {
+                    //var htmlobject = $(html);
+                    //var output = htmlobject.find("#fast_route_transit_info")[0];
+                    //var updateContent = new XMLSerializer().serializeToString(output);
+                    //$("#fast_route_transit_info").replaceWith(updateContent);
+                    //
+                    //var output1 = htmlobject.find("#cheap_route_transit_info")[0];
+                    //var updateContent1 = new XMLSerializer().serializeToString(output1);
+                    //$("#cheap_route_transit_info").replaceWith(updateContent1);
+                    //
+                    //$("#from_address").text(startadd);
+                    //$("#to_address").text(endaddd);
+                    //$("#direction_result_wrapper").show();
+                    //$("#myTabContent").show();
+                    //$("#direction_query_wrapper").hide();
+
+                },
+                error: function() {
+                    alert('There has been an error, please alert us immediately');
+                }
+            });
+
+        }
+
+        window.draw_bustrain_line = draw_bustrain_line
+
     }
+
+
 
 
 }

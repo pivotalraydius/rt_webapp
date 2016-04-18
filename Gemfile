@@ -41,6 +41,8 @@ gem 'gmaps4rails'
 
 gem 'google_maps_service'
 
+# gem 'activerecord-session_store'
+
 gem 'rails_12factor', group: :production
 
 group :development, :test do
