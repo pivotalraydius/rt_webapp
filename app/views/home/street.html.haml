@@ -1,0 +1,55 @@
+
+:javascript
+
+  function GetSearchData() {
+        var basicSearch = new BasicSearch;
+        var searchText = document.getElementById("txtSearchText").value
+        basicSearch.searchVal = searchText;
+        basicSearch.returnGeom = '1';
+        basicSearch.GetSearchResults(displayData)
+    }
+
+  function displayData(resultData){
+      debugger;
+      var results = resultData.results;
+      if (results=='No results'){
+          document.getElementById('divResults').innerHTML = "No result(s) found";
+          return false
+      }
+      else{
+          var htmlStr = "<table>";
+          htmlStr = htmlStr + "<tr><th>Search Value </th></tr>";
+          for (var i = 0; i < results.length; i++) {
+              var row = results[i];
+              htmlStr = htmlStr + "<tr>";
+              htmlStr = htmlStr + "<td>";
+              htmlStr = htmlStr + "<a href='JavaScript:ZoomTo("+ row.X +","+ row.Y +")'>" + row.SEARCHVAL + "</a>";
+              htmlStr = htmlStr + "</td>";
+              htmlStr = htmlStr + "</tr>";
+          }
+          htmlStr = htmlStr + "</table>";
+          document.getElementById('divResults').innerHTML = htmlStr;
+      }
+  }
+
+
+
+
+
+%table{:style => "width: 436px"}
+  %tr
+    %th{:colspan => "2"}
+      Address Search API Usage
+  %tr
+    %td Search Text  :
+    %td
+      %input#txtSearchText{:type => "text", :value => "City Hall"}/
+  %tr
+    %td
+      %input{:onclick => "GetSearchData();", :type => "button", :value => "Search"}/
+%table
+  %tr
+    %td
+      #divMain{:style => "width:500px;height:500px;"}
+    %td{:style => "vertical-align:top"}
+      #divResults

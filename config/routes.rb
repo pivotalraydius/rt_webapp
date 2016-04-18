@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # Serve websocket cable requests in-process
   # mount ActionCable.server => '/cable'
 
+  get "street", to: "home#street"
+
   namespace :api do
 
     match "roundtrip/get_route_by_travelMode"       => "roundtrip#get_route_by_travelMode"      , via: [:get, :post]

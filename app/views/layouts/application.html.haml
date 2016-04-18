@@ -6,11 +6,18 @@
     = csrf_meta_tags
     = action_cable_meta_tag
     = javascript_include_tag "//maps.googleapis.com/maps/api/js?libraries=places&sensor=false"
+
     %script{src: "//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js", type: "text/javascript"}
     %script{src: "//google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.9/src/infobox_packed.js", type: "text/javascript"}
     %script{src: "https://google-maps-utility-library-v3.googlecode.com/svn-history/r293/trunk/richmarker/src/richmarker.js", type: "text/javascript" }
+
+    %script{:src => "http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mXvbIZGpzXvPj5LSt37qw5o0CK/iiEjrIhv8mqckKjxJ4hKGRUKKXSSiEaxaYWu6UEVG6K3btD20/hjbPQWFzQg==|mv73ZvjFcSo=", :type => "text/JavaScript"}
+
+    -#%script{:src => "http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=", :type => "text/JavaScript"}
+
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track' => 'reload'
+    %link{:href => "//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css", :rel => "stylesheet"}/
     -#%script{:src => "//maps.googleapis.com/maps/api/js?sensor=false"}
     -#%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js"}
     -#%script{:src => "//google-maps-utility-library-v3.googlecode.com/svn/tags/infobox/1.1.9/src/infobox_packed.js", :type => "text/javascript"}

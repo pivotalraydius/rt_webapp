@@ -27,6 +27,124 @@ var roundtripMap = {
         $('#setTime').timepicker();
         $('#setTime').timepicker('setTime', new Date());
 
+        var availableTags = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+
+
+
+        $("#tags").on('change keydown keyup', function(){
+            console.log($("#tags").val())
+
+            var basicSearch = new BasicSearch;
+            var searchText = document.getElementById("tags").value
+            basicSearch.searchVal = searchText;
+            basicSearch.returnGeom = '1';
+            basicSearch.GetSearchResults(displayData)
+        });
+
+        function displayData(resultData){
+            //debugger;
+            var suggestions = [];
+            var results = resultData.results;
+            if (results=='No results'){
+                console.log("No result(s) found")
+                return false
+            }
+            else{
+                for (var i = 0; i < results.length; i++) {
+                    var row = results[i];
+                    suggestions.push(row.SEARCHVAL);
+                }
+
+            }
+
+            $("#tags" ).autocomplete({
+                source: suggestions ,
+                select: function (event, ui){
+                    var code  = $( "#tags").val()
+                    if ($.isNumeric(code)){
+                        $.ajax({
+                            url: 'http://gothere.sg/maps/geo',
+                            dataType: 'jsonp',
+                            data: {
+                                'output': 'json',
+                                'q': code,
+                                'client': '',
+                                'sensor': false
+                            },
+                            type: 'GET',
+                            success: function(data) {
+                                var status;
+
+                                var field, i, myString, placemark, status,address;
+                                field = $('tags');
+                                myString = '';
+                                status = data.Status;
+                                myString += 'Status.code: ' + status.code + '\n';
+                                myString += 'Status.request: ' + status.request + '\n';
+                                myString += 'Status.name: ' + status.name + '\n';
+                                console.log(status.code)
+                                if (status.code === 200) {
+                                    i = 0;
+                                    while (i < data.Placemark.length) {
+
+                                        placemark = data.Placemark[i];
+                                        address = placemark.address
+                                        status = data.Status[i];
+                                        myString += '============================\n';
+                                        myString += 'Address:' + placemark.address + '\n';
+                                        myString += placemark.AddressDetails.Country.CountryName + '\n';
+                                        myString += 'Coordinates: [' + placemark.Point.coordinates[0] + ', ' + placemark.Point.coordinates[1] + ', ' + placemark.Point.coordinates[2] + ']\n';
+                                        myString += '============================\n';
+                                        i++;
+                                    }
+                                    console.log(address)
+                                    $( "#tags").val(address)
+                                } else if (status.code === 603) {
+                                    field.val('No Record Found');
+                                }
+                            },
+                            statusCode: {
+                                404: function() {
+                                    alert('Page not found');
+                                }
+                            }
+                        });
+
+                    }
+                }
+
+            });
+
+
+
+        }
+
+
+
+
         $('select').on('change', function() {
             console.log( this.value ); // or $(this).val()
             if (this.value == 1){
@@ -70,6 +188,7 @@ var roundtripMap = {
                 $( "#search_btn" ).trigger( "click" );
             }
 
+            search(from)
         } });
 
 
@@ -163,6 +282,16 @@ var roundtripMap = {
             console.log("to_place",to_place)
 
         }
+
+        function search(keyword) {
+            var searchOption = {"q": keyword};
+            var gc = SDGeocode.SG;
+           var response = geocode.requestData(gc, searchOption);
+            console.log(response)
+        }
+
+
+        //window.search = search
 
     }
 

@@ -519,5 +519,9 @@ class HomeController < ApplicationController
 
   end
 
+  def street
+
+  end
+
 
 end
