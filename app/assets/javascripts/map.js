@@ -27,44 +27,34 @@ var roundtripMap = {
         $('#setTime').timepicker();
         $('#setTime').timepicker('setTime', new Date());
 
-        var availableTags = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
+        var $addinput;
 
+        $("#from_input").on('change keydown keyup', function(){
+            console.log($("#from_input").val())
 
-
-        $("#tags").on('change keydown keyup', function(){
-            console.log($("#tags").val())
-
+            $addinput = $("#from_input");
             var basicSearch = new BasicSearch;
-            var searchText = document.getElementById("tags").value
+            var searchText = $addinput.val()
+            basicSearch.searchVal = searchText;
+            basicSearch.returnGeom = '1';
+            basicSearch.GetSearchResults(displayData)
+        });
+
+        $("#to_input").on('change keydown keyup', function(){
+            console.log($("#to_input").val())
+
+            $addinput = $("#to_input");
+            var basicSearch = new BasicSearch;
+            var searchText = $addinput.val()
             basicSearch.searchVal = searchText;
             basicSearch.returnGeom = '1';
             basicSearch.GetSearchResults(displayData)
         });
 
         function displayData(resultData){
+
+            console.log(resultData)
+            console.log($addinput)
             //debugger;
             var suggestions = [];
             var results = resultData.results;
@@ -80,10 +70,10 @@ var roundtripMap = {
 
             }
 
-            $("#tags" ).autocomplete({
+            $addinput.autocomplete({
                 source: suggestions ,
                 select: function (event, ui){
-                    var code  = $( "#tags").val()
+                    var code  = $addinput.val()
                     if ($.isNumeric(code)){
                         $.ajax({
                             url: 'http://gothere.sg/maps/geo',
@@ -99,7 +89,6 @@ var roundtripMap = {
                                 var status;
 
                                 var field, i, myString, placemark, status,address;
-                                field = $('tags');
                                 myString = '';
                                 status = data.Status;
                                 myString += 'Status.code: ' + status.code + '\n';
@@ -112,18 +101,13 @@ var roundtripMap = {
 
                                         placemark = data.Placemark[i];
                                         address = placemark.address
-                                        status = data.Status[i];
-                                        myString += '============================\n';
-                                        myString += 'Address:' + placemark.address + '\n';
-                                        myString += placemark.AddressDetails.Country.CountryName + '\n';
-                                        myString += 'Coordinates: [' + placemark.Point.coordinates[0] + ', ' + placemark.Point.coordinates[1] + ', ' + placemark.Point.coordinates[2] + ']\n';
-                                        myString += '============================\n';
+
                                         i++;
                                     }
                                     console.log(address)
-                                    $( "#tags").val(address)
+                                    $addinput.val(address)
                                 } else if (status.code === 603) {
-                                    field.val('No Record Found');
+                                    $addinput.val('No Record Found');
                                 }
                             },
                             statusCode: {
@@ -137,9 +121,6 @@ var roundtripMap = {
                 }
 
             });
-
-
-
         }
 
 
@@ -187,8 +168,6 @@ var roundtripMap = {
                 console.log("Enter was pressed was presses");
                 $( "#search_btn" ).trigger( "click" );
             }
-
-            search(from)
         } });
 
 
@@ -251,44 +230,38 @@ var roundtripMap = {
 
         })
 
-        var  from_autocomplete, to_autocomplete;
+        //var  from_autocomplete, to_autocomplete;
+        //
+        //
+        //from_autocomplete = new google.maps.places.Autocomplete(
+        //    /** @type {HTMLInputElement} */(document.getElementById('from_input')),
+        //    { types: ['geocode'] });
+        //// When the user selects an address from the dropdown,
+        //// populate the address fields in the form.
+        //google.maps.event.addListener(from_autocomplete, 'place_changed', function() {
+        //    fillInAddress();
+        //});
+        //
+        //to_autocomplete = new google.maps.places.Autocomplete(
+        //    /** @type {HTMLInputElement} */(document.getElementById('to_input')),
+        //    { types: ['geocode'] });
+        //// When the user selects an address from the dropdown,
+        //// populate the address fields in the form.
+        //google.maps.event.addListener(to_autocomplete, 'place_changed', function() {
+        //    fillInAddress();
+        //});
+        //
+        //
+        //// [START region_fillform]
+        //function fillInAddress() {
+        //    // Get the place details from the autocomplete object.
+        //    var from_place = from_autocomplete.getPlace();
+        //    var to_place = to_autocomplete.getPlace();
+        //    console.log("from_place",from_place)
+        //    console.log("to_place",to_place)
+        //
+        //}
 
-
-        from_autocomplete = new google.maps.places.Autocomplete(
-            /** @type {HTMLInputElement} */(document.getElementById('from_input')),
-            { types: ['geocode'] });
-        // When the user selects an address from the dropdown,
-        // populate the address fields in the form.
-        google.maps.event.addListener(from_autocomplete, 'place_changed', function() {
-            fillInAddress();
-        });
-
-        to_autocomplete = new google.maps.places.Autocomplete(
-            /** @type {HTMLInputElement} */(document.getElementById('to_input')),
-            { types: ['geocode'] });
-        // When the user selects an address from the dropdown,
-        // populate the address fields in the form.
-        google.maps.event.addListener(to_autocomplete, 'place_changed', function() {
-            fillInAddress();
-        });
-
-
-        // [START region_fillform]
-        function fillInAddress() {
-            // Get the place details from the autocomplete object.
-            var from_place = from_autocomplete.getPlace();
-            var to_place = to_autocomplete.getPlace();
-            console.log("from_place",from_place)
-            console.log("to_place",to_place)
-
-        }
-
-        function search(keyword) {
-            var searchOption = {"q": keyword};
-            var gc = SDGeocode.SG;
-           var response = geocode.requestData(gc, searchOption);
-            console.log(response)
-        }
 
 
         //window.search = search

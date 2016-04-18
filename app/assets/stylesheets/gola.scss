@@ -57,3 +57,24 @@ div.busicon b {
   width: 5px;
   display: block;
 }
+
+.ui-autocomplete{
+  width: 220px !important;
+  max-height: 300px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+}
+
+.ui-widget {
+  font-size: inherit !important;
+}
+
+#from_address,#to_address{
+  width: 250px;
+  display:inline-block;
+  white-space: nowrap;
+  overflow:hidden !important;
+  text-overflow: ellipsis;
+  text-indent: 10px;
+}
