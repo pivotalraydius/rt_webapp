@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87772165-a864-4a29-8329-1c0888b6971f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/map.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/map.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/api/roundtrip_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/api/roundtrip_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" afterPath="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" afterPath="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
     </list>
@@ -65,18 +61,18 @@
       <file leaf-file-name="_fastest_transit_info.html.haml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.4107144">
-              <caret line="9" column="59" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+            <state vertical-scroll-proportion="-17.678572">
+              <caret line="66" column="46" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="_cheapest_transit_info.html.haml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="_cheapest_transit_info.html.haml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.625">
-              <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.046801873">
+              <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -104,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.html.haml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="application.html.haml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3627145">
+            <state vertical-scroll-proportion="-19.375">
               <caret line="31" column="145" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
               <folding />
             </state>
@@ -169,9 +165,9 @@
         <option value="$PROJECT_DIR$/app/assets/javascripts/map.js" />
         <option value="$PROJECT_DIR$/app/controllers/api/roundtrip_controller.rb" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-        <option value="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
-        <option value="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
+        <option value="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
+        <option value="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
       </list>
     </option>
   </component>
@@ -1153,26 +1149,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml">
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.625">
-          <caret line="1" column="34" selection-start-line="1" selection-start-column="34" selection-end-line="1" selection-end-column="34" />
+        <state vertical-scroll-proportion="-19.375">
+          <caret line="31" column="145" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4107144">
-          <caret line="9" column="59" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+        <state vertical-scroll-proportion="-17.678572">
+          <caret line="66" column="46" selection-start-line="0" selection-start-column="0" selection-end-line="66" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
+    <entry file="file://$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3627145">
-          <caret line="31" column="145" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.046801873">
+          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
           <folding />
         </state>
       </provider>
