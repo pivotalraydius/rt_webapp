@@ -197,7 +197,7 @@ var roundtripMap = {
 
             $.ajax({
                 type: 'get',
-                data: {start_address: startadd,end_address: endaddd, mode: 'transit',transit_mode: 'subway'},
+                data: {start_address: startadd,end_address: endaddd, mode: 'transit'},
                 success: function(html) {
                     var htmlobject = $(html);
                     var output = htmlobject.find("#fast_route_transit_info")[0];
