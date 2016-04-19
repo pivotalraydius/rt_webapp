@@ -286,17 +286,6 @@ class HomeController < ApplicationController
     end
 
 
-    @cheapest_route =  @fastest_route
-    #
-    # @cheapest_route = routes.sort! { |x, y|x[:total_transit_price].to_i <=> y[:total_transit_price].to_i}
-    #
-    # p "@cheapest_route by price"
-    # @cheapest_route.each do |route|
-    #   p route[:total_transit_price]
-    # end
-
-    #
-    # session[:fastest_route] = @fastest_route
 
   end
 

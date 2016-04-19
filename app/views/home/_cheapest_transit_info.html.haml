@@ -1,8 +1,10 @@
--if @cheapest_route.present?
+-if @fastest_route.present?
+  -cheapest_route = @fastest_route.sort! { |x, y|x[:total_transit_price].to_f <=> y[:total_transit_price].to_f}
+
   -is_transit = false
   %table.table.table-striped#fastbus-info.transit_table{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "width:100%"}
     %tbody
-      -@cheapest_route.each_with_index do |route, r_index|
+      -cheapest_route.each_with_index do |route, r_index|
         %tr.road.darkrow{:onclick => "draw_bustrain_line(0)"}
           -#%td.check &nbsp;
           -#-#%td.check &nbsp;
