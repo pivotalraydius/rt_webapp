@@ -1,6 +1,9 @@
 var roundtripMap = {
 
     init: function() {
+        var key_suggestions = [];
+        var $addinput;
+        var start_lat, start_lon, end_lat,end_lon;
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -27,7 +30,6 @@ var roundtripMap = {
         $('#setTime').timepicker();
         $('#setTime').timepicker('setTime', new Date());
 
-        var $addinput;
 
         $("#from_input").on('change keydown keyup', function(){
             console.log($("#from_input").val())
@@ -49,14 +51,15 @@ var roundtripMap = {
             basicSearch.searchVal = searchText;
             basicSearch.returnGeom = '1';
             basicSearch.GetSearchResults(displayData)
+
         });
 
         function displayData(resultData){
-
-            console.log(resultData)
-            console.log($addinput)
-            //debugger;
             var suggestions = [];
+             key_suggestions = [];
+
+            //debugger;
+
             var results = resultData.results;
             if (results=='No results'){
                 console.log("No result(s) found")
@@ -65,15 +68,49 @@ var roundtripMap = {
             else{
                 for (var i = 0; i < results.length; i++) {
                     var row = results[i];
+                    var latlng = row.X +","+ row.Y
+                    var addname = row.SEARCHVAL
+
                     suggestions.push(row.SEARCHVAL);
+                    //console.log(addname)
+                    key_suggestions.push({name:addname,coor_x:row.X, coor_y:row.Y});
                 }
 
             }
 
+            console.log(key_suggestions)
+
+            check_status = $addinput.attr("data-status")
+
             $addinput.autocomplete({
+                focus: function( event, ui ) {
+                    $addinput.val( ui.item.value );
+                    return false;
+                },
                 source: suggestions ,
+                create: function () {
+                    $(this).data('ui-autocomplete')._renderItem = function (ul, item) {
+                        return $('<li>')
+                            .append( "<a>" + item.value + "</a>" )
+                            .appendTo(ul);
+                    };
+                },
                 select: function (event, ui){
-                    var code  = $addinput.val()
+                    $addinput.val( ui.item.value );
+                    var code  = ui.item.value
+                    var coor_x,coor_y;
+
+                    for (var index in key_suggestions) {
+                        console.log("check value")
+                        console.log( key_suggestions[index]["name"] );
+                        if (key_suggestions[index]["name"] == code){
+                            coor_x =  key_suggestions[index]["coor_x"]
+                            coor_y =  key_suggestions[index]["coor_y"]
+
+                        }
+                        // ...
+                    }
+
                     if ($.isNumeric(code)){
                         $.ajax({
                             url: 'http://gothere.sg/maps/geo',
@@ -104,8 +141,11 @@ var roundtripMap = {
 
                                         i++;
                                     }
+
                                     console.log(address)
                                     $addinput.val(address)
+
+
                                 } else if (status.code === 603) {
                                     $addinput.val('No Record Found');
                                 }
@@ -118,11 +158,61 @@ var roundtripMap = {
                         });
 
                     }
+
+                    console.log("result:")
+                    // Initialization
+                    var cv = new SVY21();
+                    //// Computing Lat/Lon from SVY21
+                    var resultLatLon = cv.computeLatLon( coor_y,coor_x);
+                    console.log("SVY21 to lat / lon");
+                    mLat = resultLatLon.lat
+                    mLon = resultLatLon.lon
+
+                    if (check_status == 0) {
+                        start_lat = mLat;
+                        start_lon = mLon;
+                        var start_marker = [{
+                            "lat":mLat,
+                            "lng": mLon,
+                            "picture": {
+                                "url": "/assets/marker-6f538a8289542f22099aeb778f177e8c2767f6d2d7e7fccfe6965d8b07e21f68.png",
+                                "width":  32,
+                                "height": 32
+                            },
+                            "infowindow": $addinput.val()
+                        }]
+
+                        markers = handler.addMarkers(start_marker);
+                        handler.bounds.extendWith(markers);
+                    } else{
+                        end_lat = mLat;
+                        end_lon = mLon;
+
+                        var end_marker = [{
+                            "lat": mLat,
+                            "lng": mLon,
+                            "picture": {
+                                "url": "/assets/destination-aa36cf606c1a7d75918738830eaa38d815140329b3880d392f6a5069c1675ae7.png",
+                                "width":  32,
+                                "height": 32
+                            },
+                            "infowindow": $addinput.val()
+                        }]
+
+
+                        markers = handler.addMarkers(end_marker);
+                        handler.bounds.extendWith(markers);
+                    }
+
+
+                    handler.fitMapToBounds();
+
                 }
 
             });
-        }
 
+
+        }
 
 
 
@@ -266,32 +356,14 @@ var roundtripMap = {
 
         //window.search = search
 
-        function draw_bustrain_line(route_id){
-            alert(route_id)
-            $.ajax({
-                type: 'get',
-                data: {route_id: route_id},
-                success: function(html) {
-                    //var htmlobject = $(html);
-                    //var output = htmlobject.find("#fast_route_transit_info")[0];
-                    //var updateContent = new XMLSerializer().serializeToString(output);
-                    //$("#fast_route_transit_info").replaceWith(updateContent);
-                    //
-                    //var output1 = htmlobject.find("#cheap_route_transit_info")[0];
-                    //var updateContent1 = new XMLSerializer().serializeToString(output1);
-                    //$("#cheap_route_transit_info").replaceWith(updateContent1);
-                    //
-                    //$("#from_address").text(startadd);
-                    //$("#to_address").text(endaddd);
-                    //$("#direction_result_wrapper").show();
-                    //$("#myTabContent").show();
-                    //$("#direction_query_wrapper").hide();
-
-                },
-                error: function() {
-                    alert('There has been an error, please alert us immediately');
-                }
-            });
+        function draw_bustrain_line(obj){
+            route = $(obj).attr('data-route-legs');
+            time = $(obj).attr('data-route-total-estimated-time');
+            price = $(obj).attr('data-route-total-transit-price');
+            console.log("get route");
+            console.log(route)
+            console.log(time)
+            console.log(price)
 
         }
 

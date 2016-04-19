@@ -3,10 +3,10 @@
   %table.table.table-striped#fastbus-info.transit_table{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "width:100%"}
     %tbody
       -@fastest_route.each_with_index do |route, r_index|
-        %tr.road.darkrow{:onclick => "draw_bustrain_line(#{route[:id]})"}
+        %tr.road.darkrow{:onclick => "draw_bustrain_line(this)", "data-route"=> route}
           -#%td.check &nbsp;
           -#-#%td.check &nbsp;
-          %td{:style => "position:relative", :valign => "center", "data-id"=> route[:id]}
+          %td{:style => "position:relative", :valign => "center"}
             -is_transit = false
             -route[:legs][0][:steps].each do  |step|
               -if step[:travel_mode] == "WALKING"

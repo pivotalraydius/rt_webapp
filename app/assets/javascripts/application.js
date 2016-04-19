@@ -17,6 +17,8 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require underscore-min
+//= require proj4
+//= require svy21
 //= require_tree .
 
 
