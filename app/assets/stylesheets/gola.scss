@@ -27,7 +27,12 @@
   background: url(http://x1.sdimgs.com/img/journey/sum_icon/arrow.png) repeat scroll 0 0 transparent;
 }
 
-div.busicon {
+.drive{
+  background: url(http://x1.sdimgs.com/img/journey/jp_tabs.png) repeat scroll 0 0 transparent;
+
+}
+
+div.busicon , div.drive{
   background: url(http://x1.sdimgs.com/img/journey/busicon/img-lft.png) no-repeat left;
   height: 19px;
   padding-left: 19px;
@@ -36,7 +41,7 @@ div.busicon {
   color: #FFF;
 }
 
-div.busicon span {
+div.busicon span, div.drive span {
   float: left;
   display: block;
   height: 19px;
@@ -44,13 +49,13 @@ div.busicon span {
   border-top: 1px solid #369;
   border-bottom: 1px solid #369;
   border-right: 15px solid none;
-  background: rgba(97, 101, 164, 0.9);
+  background: rgba(97, 147, 200, 0.9);
   padding-right: 5px;
   text-align: center;
 }
 
 
-div.busicon b {
+div.busicon b , div.drive b {
   float: left;
   background: url(http://x1.sdimgs.com/img/journey/busicon/img-rgt.png);
   height: 19px;

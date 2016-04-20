@@ -1,5 +1,6 @@
 -if @fastest_route.present?
   -is_walking = false
+  -is_taxi = false
   %table.table.table-striped#fastbus-info.transit_table{:border => "0", :cellpadding => "0", :cellspacing => "0", :style => "width:100%"}
     %tbody
       -@fastest_route.each_with_index do |route, r_index|
@@ -11,8 +12,9 @@
             -route[:legs][0][:steps].each do  |step|
               -if step[:travel_mode] == "DRIVING"
                 -is_walking = false
-              -if step[:travel_mode] == "WALKING"
+                -is_taxi = true
 
+              -if step[:travel_mode] == "WALKING"
                 .bustrain_0{:style => "width:10px; height:15px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                   .walk1{:style => "width:10px;height:15px;position:absolute;top:0px; left:0px;"}
 
@@ -56,8 +58,22 @@
 
             -#.bustrain_0{:style => "width:10px; height:15px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
             -#  .walk1{:style => "width:10px;height:15px;position:absolute;top:0px; left:0px;"}
-            %br
+            -if is_taxi == true && route[:total_transit_price].present?
+              .bustrain_0{:style => "height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
+                .drive
+                  %span
+                    Taxi
+                  %b
+            -if route[:total_transit_price].nil?
+              .bustrain_0{:style => "height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
+                .drive
+                  %span
+                    Driving
+                  %b
+
+
             .info
+              %br
               %span
                 Total Time :
                 =route[:legs][0][:duration][:text]
