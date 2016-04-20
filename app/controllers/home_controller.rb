@@ -328,11 +328,8 @@ class HomeController < ApplicationController
 
     if distance >  0
 
-      if distance < 10
-        p "first 10 km"
-        p first_10km = 10 * firstmeter
-      end
-
+      p "first 10 km"
+      p first_10km = 10 * firstmeter
       if distance > 10
         p "rest meter"
         restmeter = distance - 10

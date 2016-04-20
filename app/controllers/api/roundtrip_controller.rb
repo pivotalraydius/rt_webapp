@@ -411,10 +411,8 @@ class Api::RoundtripController < ApplicationController
 
     if distance > 0
 
-      if distance < 10
         p "first 10 km"
         p first_10km = 10 * firstmeter
-      end
 
       if distance > 10
         p "rest meter"
@@ -430,44 +428,44 @@ class Api::RoundtripController < ApplicationController
         @waiting_charge = (waiting_min * waiting_rate).round(2)
 
 
-      # calculate charge for peek hours
-      if !(today.saturday? || today.sunday?)
-        p "it's weekdays"
-        if today.to_f > morning_t1.to_f and today.to_f < morning_t2.to_f
-          p "time is between morning peekhour"
-          p @peekhour_charge = @net_meterfare * peekhour
-        end
-      end
-
-      if  today.to_f > evening_t1.to_f and today.to_f < evening_t2.to_f
-        p "time is between evening peekhour"
+    # calculate charge for peek hours
+    if !(today.saturday? || today.sunday?)
+      p "it's weekdays"
+      if today.to_f > morning_t1.to_f and today.to_f < morning_t2.to_f
+        p "time is between morning peekhour"
         p @peekhour_charge = @net_meterfare * peekhour
       end
+    end
+
+    if  today.to_f > evening_t1.to_f and today.to_f < evening_t2.to_f
+      p "time is between evening peekhour"
+      p @peekhour_charge = @net_meterfare * peekhour
+    end
 
 
-      # calculate charge for late night
+    # calculate charge for late night
 
-      if  today.to_f > late_t1.to_f and today.to_f < late_t2.to_f
-        p "time is between evening peekhour"
-        @latehour_charge = @net_meterfare * late_night
-      end
+    if  today.to_f > late_t1.to_f and today.to_f < late_t2.to_f
+      p "time is between evening peekhour"
+      @latehour_charge = @net_meterfare * late_night
+    end
 
 
-      # calculate charge for holidays
-      publicH = Holidays.on(today, :sg)
+    # calculate charge for holidays
+    publicH = Holidays.on(today, :sg)
 
-      if publicH.count == 1
-        pbHoliday_charge = @net_meterfare * public_holiday
-      end
+    if publicH.count == 1
+      pbHoliday_charge = @net_meterfare * public_holiday
+    end
 
-      # calculate charge based on location
-      if depature.include?('seletar') ||  depature.include?('sentosa') ||  depature.include?('resorts world')
-        @location_charge = 3
-      end
+    # calculate charge based on location
+    if depature.include?('seletar') ||  depature.include?('sentosa') ||  depature.include?('resorts world')
+      @location_charge = 3
+    end
 
-      if depature_address.include?('expo')
-        @location_charge = 2
-      end
+    if depature_address.include?('expo')
+      @location_charge = 2
+    end
 
       if depature.include?('changi') ||  depature.include?('terminal') ||  depature.include?('airport')
 
