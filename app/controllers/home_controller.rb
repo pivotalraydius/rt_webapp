@@ -291,7 +291,7 @@ class HomeController < ApplicationController
     p "DEPATURE ADD"
     p depature= @depature_address.downcase!
     depature= depature.to_s
-    distance = total_distance_km - 1
+    p distance = total_distance_km - 1
     total_time = total_duration_min
 
     @flat_rate = 3.2
@@ -326,9 +326,13 @@ class HomeController < ApplicationController
 
     @net_meterfare= 0.0,  @waiting_charge= 0.0, @peekhour_charge = 0.0 , @latehour_charge = 0.0 , @pbHoliday_charge= 0.0, @location_charge=0.0
 
-    if (distance - 10) != 0 || distance < 10
-      p "first 10 km"
-      p first_10km = 10 * firstmeter
+    if distance >  0
+
+      if distance < 10
+        p "first 10 km"
+        p first_10km = 10 * firstmeter
+      end
+
       if distance > 10
         p "rest meter"
         restmeter = distance - 10

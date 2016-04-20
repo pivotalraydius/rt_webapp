@@ -409,84 +409,88 @@ class Api::RoundtripController < ApplicationController
 
      @net_meterfare= 0.0,  @waiting_charge= 0.0, @peekhour_charge = 0.0 , @latehour_charge = 0.0 , @pbHoliday_charge= 0.0, @location_charge=0.0
 
-    if (distance - 10) != 0 || distance < 10
-      p "first 10 km"
-      p first_10km = 10 * firstmeter
-    if distance > 10
-      p "rest meter"
-      restmeter = distance - 10
-      p rest_km = restmeter * secondmeter
-    end
+    if distance > 0
 
-    # sum of the first 10 km and rest km for net meter fare
-    p "net meter fare"
-    p @net_meterfare = (first_10km + rest_km).round(2)
+      if distance < 10
+        p "first 10 km"
+        p first_10km = 10 * firstmeter
+      end
 
-    # calculate charge for waiting time in traffic
-      @waiting_charge = (waiting_min * waiting_rate).round(2)
+      if distance > 10
+        p "rest meter"
+        restmeter = distance - 10
+        p rest_km = restmeter * secondmeter
+      end
+
+      # sum of the first 10 km and rest km for net meter fare
+      p "net meter fare"
+      p @net_meterfare = (first_10km + rest_km).round(2)
+
+      # calculate charge for waiting time in traffic
+        @waiting_charge = (waiting_min * waiting_rate).round(2)
 
 
-    # calculate charge for peek hours
-    if !(today.saturday? || today.sunday?)
-      p "it's weekdays"
-      if today.to_f > morning_t1.to_f and today.to_f < morning_t2.to_f
-        p "time is between morning peekhour"
+      # calculate charge for peek hours
+      if !(today.saturday? || today.sunday?)
+        p "it's weekdays"
+        if today.to_f > morning_t1.to_f and today.to_f < morning_t2.to_f
+          p "time is between morning peekhour"
+          p @peekhour_charge = @net_meterfare * peekhour
+        end
+      end
+
+      if  today.to_f > evening_t1.to_f and today.to_f < evening_t2.to_f
+        p "time is between evening peekhour"
         p @peekhour_charge = @net_meterfare * peekhour
       end
-    end
-
-    if  today.to_f > evening_t1.to_f and today.to_f < evening_t2.to_f
-      p "time is between evening peekhour"
-      p @peekhour_charge = @net_meterfare * peekhour
-    end
 
 
-    # calculate charge for late night
+      # calculate charge for late night
 
-    if  today.to_f > late_t1.to_f and today.to_f < late_t2.to_f
-      p "time is between evening peekhour"
-      @latehour_charge = @net_meterfare * late_night
-    end
-
-
-    # calculate charge for holidays
-    publicH = Holidays.on(today, :sg)
-
-    if publicH.count == 1
-      pbHoliday_charge = @net_meterfare * public_holiday
-    end
-
-    # calculate charge based on location
-    if depature.include?('seletar') ||  depature.include?('sentosa') ||  depature.include?('resorts world')
-      @location_charge = 3
-    end
-
-    if depature_address.include?('expo')
-      @location_charge = 2
-    end
-
-    if depature.include?('changi') ||  depature.include?('terminal') ||  depature.include?('airport')
-
-      if today.friday? || today.saturday? || today.sunday?
-        p "today is friday to sunday"
-        if  today.to_f > changi_t1.to_f and today.to_f < changi_t2.to_f
-          @location_charge = 5
-        else
-          @location_charge = 3
-        end
-
-      else
-        p "not friday nor sunday"
-        p @location_charge = 3
+      if  today.to_f > late_t1.to_f and today.to_f < late_t2.to_f
+        p "time is between evening peekhour"
+        @latehour_charge = @net_meterfare * late_night
       end
-    end
+
+
+      # calculate charge for holidays
+      publicH = Holidays.on(today, :sg)
+
+      if publicH.count == 1
+        pbHoliday_charge = @net_meterfare * public_holiday
+      end
+
+      # calculate charge based on location
+      if depature.include?('seletar') ||  depature.include?('sentosa') ||  depature.include?('resorts world')
+        @location_charge = 3
+      end
+
+      if depature_address.include?('expo')
+        @location_charge = 2
+      end
+
+      if depature.include?('changi') ||  depature.include?('terminal') ||  depature.include?('airport')
+
+        if today.friday? || today.saturday? || today.sunday?
+          p "today is friday to sunday"
+          if  today.to_f > changi_t1.to_f and today.to_f < changi_t2.to_f
+            @location_charge = 5
+          else
+            @location_charge = 3
+          end
+
+        else
+          p "not friday nor sunday"
+          p @location_charge = 3
+        end
+      end
 
 
 
-    p total_estimated_fare = @flat_rate + @net_meterfare + @waiting_charge +  @peekhour_charge + @latehour_charge + @pbHoliday_charge + @location_charge
+      p total_estimated_fare = @flat_rate + @net_meterfare + @waiting_charge +  @peekhour_charge + @latehour_charge + @pbHoliday_charge + @location_charge
 
 
-    return total_estimated_fare
+      return total_estimated_fare
     end
 
  end
