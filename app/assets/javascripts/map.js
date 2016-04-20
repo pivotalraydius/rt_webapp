@@ -3,7 +3,7 @@ var roundtripMap = {
     init: function() {
         var key_suggestions = [];
         var $addinput;
-        var start_lat, start_lon, end_lat,end_lon;
+        var start_lat, start_lon, end_lat,end_lon,startadd,endadd;
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -291,14 +291,14 @@ var roundtripMap = {
 
         $("#search_btn").on("click", function(){
 
-            var startadd = $("#from_input").val();
-            var endaddd = $("#to_input").val();
+            startadd = $("#from_input").val();
+            endadd = $("#to_input").val();
 
 
 
             $.ajax({
                 type: 'get',
-                data: {start_address: startadd,end_address: endaddd, mode: 'transit'},
+                data: {start_address: startadd,end_address: endadd, mode: 'transit',transit_mode: 'subway'},
                 success: function(html) {
                     var htmlobject = $(html);
                     var output = htmlobject.find("#fast_route_transit_info")[0];
@@ -310,7 +310,7 @@ var roundtripMap = {
                     $("#cheap_route_transit_info").replaceWith(updateContent1);
 
                     $("#from_address").text(startadd);
-                    $("#to_address").text(endaddd);
+                    $("#to_address").text(endadd);
                     $("#direction_result_wrapper").show();
                     $("#myTabContent").show();
                     $("#direction_query_wrapper").hide();
@@ -369,7 +369,63 @@ var roundtripMap = {
 
 
 
-        //window.search = search
+
+        function change_route_by_type(obj){
+
+            type = $(obj).attr('data-type');
+
+            var selectedMode,selectedType;
+            if (type == 'bus'){
+                selectedMode = "transit";
+                selectedType = "bus"
+
+            }else if(type == "train"){
+                selectedMode = "transit";
+                selectedType = "subway"
+            }else if(type == "taxi"){
+                selectedMode = "taxi";
+                selectedType = ""
+            }else{
+                selectedMode = "driving";
+                selectedType = "driving"
+            }
+
+            $.ajax({
+                type: 'get',
+                data: {start_address: startadd,end_address: endadd, mode: selectedMode,transit_mode: selectedType},
+                success: function(html) {
+                    var htmlobject = $(html);
+                    var output = htmlobject.find("#fast_route_transit_info")[0];
+                    var updateContent = new XMLSerializer().serializeToString(output);
+                    $("#fast_route_transit_info").replaceWith(updateContent);
+
+                    var output1 = htmlobject.find("#cheap_route_transit_info")[0];
+                    var updateContent1 = new XMLSerializer().serializeToString(output1);
+                    $("#cheap_route_transit_info").replaceWith(updateContent1);
+
+
+                    $("#direction_result_wrapper").show();
+                    $("#myTabContent").show();
+
+                    //calculateAndDisplayRoute(directionsService, directionsDisplay);
+                    calculateAndDisplayRoute(
+                        directionsDisplay, directionsService, markerArray, stepDisplay, map);
+
+
+                    $('.transport_type').each(function(index, obj){
+                        //you can use this to access the current item
+                        $(obj).removeClass("active_mode")
+                    });
+
+                    $(obj).find( "span").addClass("active_mode")
+                },
+                error: function() {
+                    alert('There has been an error, please alert us immediately');
+                }
+            });
+
+
+        }
 
         function draw_bustrain_line(obj){
             route = $(obj).attr('data-route-legs');
@@ -408,21 +464,26 @@ var roundtripMap = {
 
         function calculateAndDisplayRoute(directionsDisplay, directionsService,
                                           markerArray, stepDisplay, map) {
-            var selectedMode = "TRANSIT";
+            //var selectedMode = "TRANSIT";
             // First, remove any existing markers from the map.
             for (var i = 0; i < markerArray.length; i++) {
                 markerArray[i].setMap(null);
             }
 
+            var request = {
+                origin: {lat: start_lat, lng: start_lon},
+                destination: {lat: end_lat, lng: end_lon},
+                travelMode: google.maps.TravelMode["TRANSIT"]
+            };
+
             // Retrieve the start and end locations and create a DirectionsRequest using
             // WALKING directions.
-            directionsService.route({
-                origin: {lat: start_lat, lng: start_lon},  // Haight.
-                destination: {lat: end_lat, lng: end_lon},  // Ocean Beach.
-                travelMode: google.maps.TravelMode[selectedMode]
-            }, function(response, status) {
+            directionsService.route(request, function(response, status) {
                 // Route the directions and pass the response to a function to create
                 // markers for each step.
+
+                console.log(response)
+                console.log(response.routes[0])
 
                 var polyline = new google.maps.Polyline({
                     strokeColor: '#6855C9',
@@ -464,6 +525,8 @@ var roundtripMap = {
         }
 
         window.draw_bustrain_line = draw_bustrain_line
+        window.change_route_by_type = change_route_by_type
+
 
     }
 

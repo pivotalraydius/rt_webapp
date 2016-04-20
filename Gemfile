@@ -43,6 +43,8 @@ gem 'google_maps_service'
 
 gem "svy21", "~> 1.0.1"
 
+gem 'holidays', '~> 3.2'
+
 # gem 'activerecord-session_store'
 
 gem 'rails_12factor', group: :production

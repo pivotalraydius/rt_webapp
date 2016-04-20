@@ -234,14 +234,15 @@ class Api::RoundtripController < ApplicationController
           p totalestimateprice = total_estimated_fare.round(2)
           today = Time.new.utc.in_time_zone
 
-          drivingHash = { servertime: today,flate_rate: @flat_rate, net_meter_fare: @net_meterfare,
+          drivingHash = { total_transit_price:totalestimateprice,servertime: today,flate_rate: @flat_rate, net_meter_fare: @net_meterfare,
                           waiting_charge: @waiting_charge, peek_hour_charge: @peekhour_charge,
                           late_hour_charge: @latehour_charge, public_holidy_charge: @pbHoliday_charge ,
                           location_charge: @location_charge}
-          tempHash[:total_transit_price] = totalestimateprice
 
-          route.merge!(tempHash)
+
           route.merge!(drivingHash)
+
+
 
         elsif step[:travel_mode] == "WALKING"
 
@@ -332,64 +333,39 @@ class Api::RoundtripController < ApplicationController
 
         end
 
+
       end
 
 
       p "+++++++++++++"
+      if mode == "transit"
+        est_price =0.0
+        route[:legs][0][:steps].each_with_index do |step,s_index|
+          if step[:travel_mode] == "TRANSIT"
 
-      est_price =0.0
-      route[:legs][0][:steps].each_with_index do |step,s_index|
-        if step[:travel_mode] == "TRANSIT"
 
+            step[:distance][:estimate_price]
 
-          step[:distance][:estimate_price]
+            est_price = est_price + step[:distance][:estimate_price]
 
-          est_price = est_price + step[:distance][:estimate_price]
-
+          end
         end
+
+
+          tempHash[:total_transit_price] = est_price
+          route.merge!(tempHash)
+
+
+        tempTime = Hash.new
+        tempTime[:total_estimated_time] = @total_estimated_time
+
+
+        route.merge!(tempTime)
       end
-      tempHash[:total_transit_price] = est_price
-
-      tempTime = Hash.new
-      tempTime[:total_estimated_time] = @total_estimated_time
-
-      route.merge!(tempHash)
-      route.merge!(tempTime)
 
     end
 
-
-
-    # @cheapest_route =  @fastest_route if @fastest_route.size <= 1 # already sorted
-    #
-    # loop do
-    #   swapped = false
-    #
-    #   0.upto(@fastest_route.size-2) do |i|
-    #
-    #     p @fastest_route[i][:total_transit_price]
-    #     p @fastest_route[i+1][:total_transit_price]
-    #
-    #     if @fastest_route[i][:total_transit_price] > @fastest_route[i+1][:total_transit_price]
-    #       @fastest_route[i] , @fastest_route[i+1] = @fastest_route[i+1], @fastest_route[i] # swap values
-    #       swapped = true
-    #     end
-    #
-    #   end
-    #
-    #   break unless swapped
-    #
-    # end
-
-
     @cheapest_route  = @fastest_route
-    # p "cheapest_route by price"
-    # @cheapest_route.each do |route|
-    #   p route[:total_transit_price]
-    # end
-
-
-
     render json: {fastest_routes: @fastest_route,cheapest_routes: @cheapest_route}
 
   end

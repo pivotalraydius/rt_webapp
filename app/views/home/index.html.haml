@@ -56,14 +56,14 @@
   #direction_result_wrapper{style:'display:none'}
     =render 'home/routeheader'
     %ul#directions_mode.m_train
-      %li#bus
-        %span bus
-      %li#train
-        %span.active_mode train/bus
-      %li#taxi
-        %span taxi
-      %li#drive
-        %span drive
+      %li#bus{:onclick => "change_route_by_type(this)", "data-type"=> "bus"}
+        %span.transport_type bus
+      %li#train{:onclick => "change_route_by_type(this)", "data-type"=> "train"}
+        %span.active_mode.transport_type train/bus
+      %li#taxi{:onclick => "change_route_by_type(this)", "data-type"=> "taxi"}
+        %span.transport_type taxi
+      %li#drive.transport_type{:onclick => "change_route_by_type(this)", "data-type"=> "driving"}
+        %span.transport_type drive
 
     %ul#myTabs.nav.nav-tabs{:role => "tablist"}
       %li.active{:role => "presentation"}

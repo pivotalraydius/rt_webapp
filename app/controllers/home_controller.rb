@@ -16,20 +16,11 @@ class HomeController < ApplicationController
       get_route_direction(mode,transit_mode,start_latitude,start_longitude,end_latitude ,end_longitude,start_address,end_address)
     end
 
-    if params[:route_id]
-      @fastest_route =  session[:fastest_route]
-      @fastest_route.each do |route|
-        if route[:id] == params[:route_id]
-          p "selected route"
-          p route
 
-        end
-      end
-    end
 
   end
 
-  def get_route_direction(mode,transit_mode,start_latitude,start_longitude,end_latitude ,end_longitude,start_address,end_address)
+  def get_route_direction(modetype,transit_mode,start_latitude,start_longitude,end_latitude ,end_longitude,start_address,end_address)
 
     price1= 0.0
     price2= 0.0
@@ -39,16 +30,16 @@ class HomeController < ApplicationController
     @flat_rate=0.0, @net_meterfare= 0.0,  @waiting_charge= 0.0, @peekhour_charge = 0.0 , @latehour_charge = 0.0 , @pbHoliday_charge= 0.0, @location_charge=0.0
 
     # Simple directions
+    mode = modetype
 
-    if mode == "taxi"
+    if modetype == "taxi"
 
       mode = "driving"
 
-    elsif mode == "bicycling"
+    elsif modetype == "bicycling"
       mode = "walking"
 
     end
-
 
     if transit_mode.present?
       if start_address.present?
@@ -114,10 +105,53 @@ class HomeController < ApplicationController
 
 
     @fastest_route.each_with_index do |route, r_index|
+
       route_index = r_index+1
       tempid = Hash.new
       tempid[:id] = route_index
       route.merge!(tempid)
+      @depature_address =  route[:legs][0][:start_address]
+
+      if modetype == "taxi"
+
+        drivingHash = Hash.new
+
+        p "DRIVING"
+        p total_distance_km =  (route[:legs][0][:distance][:value]* 0.001).round(1)
+        p total_duration_min =  route[:legs][0][:duration][:value] / 60
+        p total_estimated_fare = calculate_taxi_rate(total_distance_km, total_duration_min)
+
+        p "calculate_taxi_rate"
+        p "flat down rate"
+        p @flat_rate
+        p "net meter fare"
+        p @net_meterfare
+        p "waiting charge"
+        p @waiting_charge
+        p "peek hour charge"
+        p @peekhour_charge
+        p "late hour charge"
+        p @latehour_charge
+        p "public holiday charge"
+        p @pbHoliday_charge
+        p "location charge"
+        p @location_charge
+
+
+        p "total estiamte price"
+        p totalestimateprice = total_estimated_fare.round(2)
+        today = Time.new.utc.in_time_zone
+        tempHash = Hash.new
+        drivingHash= Hash.new
+
+        drivingHash = { total_transit_price:totalestimateprice,servertime: today,flate_rate: @flat_rate, net_meter_fare: @net_meterfare,
+                        waiting_charge: @waiting_charge, peek_hour_charge: @peekhour_charge,
+                        late_hour_charge: @latehour_charge, public_holidy_charge: @pbHoliday_charge ,
+                        location_charge: @location_charge}
+
+
+        route.merge!(drivingHash)
+      end
 
       steps = route[:legs][0][:steps]
       steps.each_with_index do |step,s_index|
@@ -220,44 +254,9 @@ class HomeController < ApplicationController
 
         elsif step[:travel_mode] == "DRIVING"
 
-          drivingHash = Hash.new
-
-          p "DRIVING"
-          p total_distance_km =  (route[:legs][0][:distance][:value]* 0.001).round(1)
-          p total_duration_min =  route[:legs][0][:duration][:value] / 60
-          p total_estimated_fare = calculate_taxi_rate(depature_address ,total_distance_km, total_duration_min)
-
-          p "calculate_taxi_rate"
-          p "flat down rate"
-          p @flat_rate
-          p "net meter fare"
-          p @net_meterfare
-          p "waiting charge"
-          p @waiting_charge
-          p "peek hour charge"
-          p @peekhour_charge
-          p "late hour charge"
-          p @latehour_charge
-          p "public holiday charge"
-          p @pbHoliday_charge
-          p "location charge"
-          p @location_charge
 
 
-          p "total estiamte price"
-          p totalestimateprice = total_estimated_fare.round(2)
-          today = Time.new.utc.in_time_zone
-          tempHash = Hash.new
-          drivingHash= Hash.new
 
-          drivingHash = { servertime: today,flate_rate: @flat_rate, net_meter_fare: @net_meterfare,
-                          waiting_charge: @waiting_charge, peek_hour_charge: @peekhour_charge,
-                          late_hour_charge: @latehour_charge, public_holidy_charge: @pbHoliday_charge ,
-                          location_charge: @location_charge}
-          tempHash[:total_transit_price] = totalestimateprice
-
-          route.merge!(tempHash)
-          route.merge!(drivingHash)
 
         elsif step[:travel_mode] == "WALKING"
 
@@ -265,8 +264,6 @@ class HomeController < ApplicationController
           @total_walking_distance = @total_walking_distance + step_distance
 
           total_frist_walking_and_transit = 0.0
-
-
         end
 
       end
@@ -276,8 +273,8 @@ class HomeController < ApplicationController
 
       route.merge!(tempTime)
 
-    end
 
+    end
 
 
     p "fastest route"
@@ -290,9 +287,9 @@ class HomeController < ApplicationController
   end
 
 
-  def calculate_taxi_rate(depature_address ,total_distance_km, total_duration_min)
-    p "DEPATURE"
-    p depature= depature_address.downcase!
+  def calculate_taxi_rate( total_distance_km, total_duration_min)
+    p "DEPATURE ADD"
+    p depature= @depature_address.downcase!
     depature= depature.to_s
     distance = total_distance_km - 1
     total_time = total_duration_min
@@ -381,7 +378,7 @@ class HomeController < ApplicationController
         @location_charge = 3
       end
 
-      if depature_address.include?('expo')
+      if depature.include?('expo')
         @location_charge = 2
       end
 
