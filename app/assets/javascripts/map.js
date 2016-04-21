@@ -4,7 +4,7 @@ var roundtripMap = {
         var key_suggestions = [];
         var $addinput;
         var start_lat, start_lon, end_lat,end_lon,startadd,endadd;
-
+        var s_marker,e_marker;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
         }else {
@@ -39,6 +39,8 @@ var roundtripMap = {
         directionsDisplay.setMap(handler.getMap());
         // Instantiate an info window to hold step text.
         var stepDisplay = new google.maps.InfoWindow;
+
+        var start_marker, destination_marker;
 
 
         var polylineOptions = {
@@ -205,10 +207,17 @@ var roundtripMap = {
                     mLat = resultLatLon.lat
                     mLon = resultLatLon.lon
 
+
+
                     if (check_status == 0) {
                         start_lat = mLat;
                         start_lon = mLon;
-                        var start_marker = [{
+
+                        if (start_marker != undefined) {
+                            handler.removeMarkers(s_marker)
+                        }
+
+                        start_marker = [{
                             "lat":mLat,
                             "lng": mLon,
                             "picture": {
@@ -219,13 +228,23 @@ var roundtripMap = {
                             "infowindow": $addinput.val()
                         }]
 
-                        //markers = handler.addMarkers(start_marker);
-                        //handler.bounds.extendWith(markers);
+                        s_marker = handler.addMarkers(start_marker);
+                        handler.bounds.extendWith(s_marker);
+                        handler.fitMapToBounds();
+
+
+
+
                     } else{
+
                         end_lat = mLat;
                         end_lon = mLon;
 
-                        var end_marker = [{
+                        if (destination_marker != undefined) {
+                            handler.removeMarkers(e_marker)
+                        }
+
+                        destination_marker = [{
                             "lat": mLat,
                             "lng": mLon,
                             "picture": {
@@ -236,13 +255,16 @@ var roundtripMap = {
                             "infowindow": $addinput.val()
                         }]
 
+                        e_marker = handler.addMarkers(destination_marker);
+                        handler.bounds.extendWith(e_marker);
+                        handler.fitMapToBounds();
 
-                        //markers = handler.addMarkers(end_marker);
-                        //handler.bounds.extendWith(markers);
+
+
+
+
                     }
 
-
-                    handler.fitMapToBounds();
 
                 }
 
@@ -315,6 +337,12 @@ var roundtripMap = {
             $("#from_input").val('');
             $("#to_input").val('');
             $('#setTime').timepicker('setTime', new Date());
+            if (directions && directions.length > 0) {
+                for (var i = 0; i < directions.length; i++)
+                    directions[i].setMap(null);
+            }
+            directions = [];
+
         })
 
         $("#search_btn").on("click", function(){
@@ -362,10 +390,20 @@ var roundtripMap = {
         })
 
         $("#menuBack").on("click", function(){
-
+            $("#from_input").val('');
+            $("#to_input").val('');
             $("#direction_result_wrapper").hide();
             $("#myTabContent").hide();
             $("#direction_query_wrapper").show()
+
+            if (directions && directions.length > 0) {
+                for (var i = 0; i < directions.length; i++)
+                    directions[i].setMap(null);
+            }
+            directions = [];
+
+            start_marker.setMap(null);
+            destination_marker.setMap(null);
 
         })
 
