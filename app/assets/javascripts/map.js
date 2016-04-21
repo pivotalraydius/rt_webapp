@@ -11,10 +11,7 @@ var roundtripMap = {
             x.innerHTML = "Geolocation is not supported by this browser.";
         }
 
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var directionsService = new google.maps.DirectionsService;
-        // Instantiate an info window to hold step text.
-        var stepDisplay = new google.maps.InfoWindow;
+
 
         handler = Gmaps.build('Google');
         handler.buildMap({
@@ -34,7 +31,14 @@ var roundtripMap = {
 
         var map = handler.getMap();
         var markerArray = [];
+
+
+        var directions = [];
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
         directionsDisplay.setMap(handler.getMap());
+        // Instantiate an info window to hold step text.
+        var stepDisplay = new google.maps.InfoWindow;
 
         $('#setTime').timepicker();
         $('#setTime').timepicker('setTime', new Date());
@@ -251,7 +255,7 @@ var roundtripMap = {
 
             if(from.length && to.length) {
                 console.log("Enter was pressed was presses");
-                $( "#search_btn" ).trigger( "click" );
+                //$( "#search_btn" ).trigger( "click" );
 
 
             }else{
@@ -294,11 +298,12 @@ var roundtripMap = {
             startadd = $("#from_input").val();
             endadd = $("#to_input").val();
 
+            data_params = {start_latitude: start_lat, start_longitude: start_lon, end_latitude: end_lat, end_longitude: end_lon, mode: 'transit',transit_mode: 'subway'}
 
-
+            console.log(data_params)
             $.ajax({
                 type: 'get',
-                data: {start_address: startadd,end_address: endadd, mode: 'transit',transit_mode: 'subway'},
+                data: data_params,
                 success: function(html) {
                     var htmlobject = $(html);
                     var output = htmlobject.find("#fast_route_transit_info")[0];
@@ -314,9 +319,14 @@ var roundtripMap = {
                     $("#direction_result_wrapper").show();
                     $("#myTabContent").show();
                     $("#direction_query_wrapper").hide();
-                    //calculateAndDisplayRoute(directionsService, directionsDisplay);
-                    calculateAndDisplayRoute(
-                        directionsDisplay, directionsService, markerArray, stepDisplay, map);
+
+                    if (directions && directions.length > 0) {
+                        for (var i = 0; i < directions.length; i++)
+                            directions[i].setMap(null);
+                    }
+                    directions = [];
+
+                    calculateAndDisplayRoute(directionsService, markerArray, stepDisplay, map, true, "SUBWAY");
 
 
                 },
@@ -378,21 +388,31 @@ var roundtripMap = {
             if (type == 'bus'){
                 selectedMode = "transit";
                 selectedType = "bus"
+                is_transit = true
+                transport_type = "BUS"
 
             }else if(type == "train"){
                 selectedMode = "transit";
                 selectedType = "subway"
+                is_transit = true
+                transport_type = "SUBWAY"
+
             }else if(type == "taxi"){
                 selectedMode = "taxi";
                 selectedType = ""
+                is_transit = false
+                transport_type = "DRIVING"
+
             }else{
                 selectedMode = "driving";
                 selectedType = "driving"
+                is_transit = false
+                transport_type = "DRIVING"
             }
 
             $.ajax({
                 type: 'get',
-                data: {start_address: startadd,end_address: endadd, mode: selectedMode,transit_mode: selectedType},
+                data: {start_latitude: start_lat,start_longitude: start_lon,end_latitude: end_lat,end_longitude: end_lon, mode: selectedMode,transit_mode: selectedType},
                 success: function(html) {
                     var htmlobject = $(html);
                     var output = htmlobject.find("#fast_route_transit_info")[0];
@@ -407,9 +427,14 @@ var roundtripMap = {
                     $("#direction_result_wrapper").show();
                     $("#myTabContent").show();
 
-                    //calculateAndDisplayRoute(directionsService, directionsDisplay);
-                    calculateAndDisplayRoute(
-                        directionsDisplay, directionsService, markerArray, stepDisplay, map);
+
+                    if (directions && directions.length > 0) {
+                        for (var i = 0; i < directions.length; i++)
+                            directions[i].setMap(null);
+                    }
+                    directions = [];
+
+                    calculateAndDisplayRoute(directionsService, markerArray, stepDisplay, map, is_transit, transport_type);
 
 
                     $('.transport_type').each(function(index, obj){
@@ -435,53 +460,41 @@ var roundtripMap = {
             console.log(route)
             console.log(time)
             console.log(price)
-            //calculateAndDisplayRoute(directionsService, directionsDisplay);
-
-            calculateAndDisplayRoute(
-                directionsDisplay, directionsService, markerArray, stepDisplay, map);
 
         }
 
-        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-            var selectedMode = "TRANSIT";
-            directionsService.route({
-                origin: {lat: start_lat, lng: start_lon},  // Haight.
-                destination: {lat: end_lat, lng: end_lon},  // Ocean Beach.
-                // Note that Javascript allows us to access the constant
-                // using square brackets and a string value as its
-                // "property."
-                travelMode: google.maps.TravelMode[selectedMode]
-            }, function(response, status) {
-                var steps = response
-                console.log(steps)
-                if (status == google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                } else {
-                    window.alert('Directions request failed due to ' + status);
-                }
-            });
-        }
 
-        function calculateAndDisplayRoute(directionsDisplay, directionsService,
-                                          markerArray, stepDisplay, map) {
+        function calculateAndDisplayRoute(directionsService,markerArray, stepDisplay, map, is_transit, transit_mode) {
             //var selectedMode = "TRANSIT";
             // First, remove any existing markers from the map.
             for (var i = 0; i < markerArray.length; i++) {
                 markerArray[i].setMap(null);
             }
 
-            var request = {
-                origin: {lat: start_lat, lng: start_lon},
-                destination: {lat: end_lat, lng: end_lon},
-                travelMode: google.maps.TravelMode["TRANSIT"]
-            };
+            if (is_transit == true){
+                var request = {
+                    origin: {lat: start_lat, lng: start_lon},
+                    destination: {lat: end_lat, lng: end_lon},
+                    travelMode: google.maps.TravelMode.TRANSIT,
+                    transitOptions: {
+                        modes: [google.maps.TransitMode[transit_mode]],
+                    },
+                    provideRouteAlternatives: true
+                };
+            }else{
+                var request = {
+                    origin: {lat: start_lat, lng: start_lon},
+                    destination: {lat: end_lat, lng: end_lon},
+                    travelMode: google.maps.TravelMode[transit_mode],
+                    provideRouteAlternatives: true
+                };
+            }
+
 
             // Retrieve the start and end locations and create a DirectionsRequest using
-            // WALKING directions.
+
             directionsService.route(request, function(response, status) {
                 // Route the directions and pass the response to a function to create
-                // markers for each step.
-
                 console.log(response)
                 console.log(response.routes[0])
 
@@ -491,15 +504,34 @@ var roundtripMap = {
                     strokeWeight: 7
                 });
 
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    directionsDisplay.setOptions({polylineOptions: polyline});
-                    showSteps(response, markerArray, stepDisplay, map);
+                if (status == google.maps.DirectionsStatus.OK) {
+                    for (var i = 0, len = response.routes.length; i < len; i++) {
+
+                        directions.push(new google.maps.DirectionsRenderer({
+                            map: map,
+                            directions: response,
+                            routeIndex: i
+                            //suppressMarkers: true
+                        }));
+
+                        //showSteps(response, markerArray, stepDisplay, map);
+                    }
                 } else {
                     window.alert('Directions request failed due to ' + status);
                 }
+
+
+
             });
         }
+
+        //if (status === google.maps.DirectionsStatus.OK) {
+        //    directionsDisplay.setDirections(response);
+        //    directionsDisplay.setOptions({polylineOptions: polyline});
+        //    showSteps(response, markerArray, stepDisplay, map);
+        //} else {
+        //    window.alert('Directions request failed due to ' + status);
+        //}
 
         function showSteps(directionResult, markerArray, stepDisplay, map) {
             // For each step, place a marker, and add the text to the marker's infowindow.
@@ -523,6 +555,13 @@ var roundtripMap = {
                 stepDisplay.open(map, marker);
             });
         }
+
+        //google.maps.event.addListener(directionsDisplay,'routeindex_changed',function(){
+        //    //current routeIndex
+        //    console.log(this.getRouteIndex());
+        //    //current route
+        //    console.log(this.getDirections().routes[this.getRouteIndex()]);
+        //});
 
         window.draw_bustrain_line = draw_bustrain_line
         window.change_route_by_type = change_route_by_type
