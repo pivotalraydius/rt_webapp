@@ -40,6 +40,30 @@ var roundtripMap = {
         // Instantiate an info window to hold step text.
         var stepDisplay = new google.maps.InfoWindow;
 
+
+        var polylineOptions = {
+            strokeColor: '#6855C9',
+            strokeOpacity: 1,
+            strokeWeight: 4
+        };
+        var walkingPolylineOptions = {
+            strokeColor: '#6855C9',
+            strokeOpacity: 0,
+            strokeWeight: 4,
+            icons: [{
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillColor: '#6855C9',
+                    fillOpacity: 1,
+                    scale: 2,
+                    strokeColor: '#6855C9',
+                    strokeOpacity: 1,
+                },
+                offset: '0',
+                repeat: '10px'
+            }]
+        };
+
         $('#setTime').timepicker();
         $('#setTime').timepicker('setTime', new Date());
 
@@ -271,7 +295,7 @@ var roundtripMap = {
 
             if(from.length && to.length) {
                 console.log("Enter was pressed was presses");
-                $( "#search_btn" ).trigger( "click" );
+                //$( "#search_btn" ).trigger( "click" );
             }
         } });
 
@@ -504,15 +528,62 @@ var roundtripMap = {
                     strokeWeight: 7
                 });
 
+
+                var renderer = new google.maps.DirectionsRenderer({
+                    suppressPolylines: true,
+                    polylineOptions: {
+                        strokeColor: '#6855C9',
+                        strokeOpacity: 0,
+                        strokeWeight: 1,
+                        routeIndex: i,
+                        icons: [{
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                fillColor: '#6855C9',
+                                scale: 3,
+                                strokeOpacity: 1
+                            },
+                            offset: '0',
+                            repeat: '15px'
+                        }]
+                    }
+                });
+
+
+                var iconSequence = {
+                    icon: {
+                        fillColor: '#6855C9', //or hexadecimal color such as: '#FF0000'
+                        fillOpacity: 0.8,
+                        scale: 3,
+                        strokeColor: '6855C9',
+                        strokeWeight: 1,
+                        strokeOpacity: 0.8,
+                        path: google.maps.SymbolPath.CIRCLE
+                    },
+                    repeat: '10px'
+                };
+
+
                 if (status == google.maps.DirectionsStatus.OK) {
                     for (var i = 0, len = response.routes.length; i < len; i++) {
+
+                        //renderer.setDirections(response);
+                        //renderer.setMap(map);
+                        //renderDirectionsPolylines(response);
 
                         directions.push(new google.maps.DirectionsRenderer({
                             map: map,
                             directions: response,
-                            routeIndex: i
-                            //suppressMarkers: true
+                            routeIndex: i,
+                            polylineOptions: {
+                                strokeColor: '#6855C9',
+                                strokeWeight: 6,
+                                strokeOpacity: 0.7
+                            },
+                            DottedPolylineOptions: iconSequence,
+                            suppressMarkers: true
                         }));
+
 
                         //showSteps(response, markerArray, stepDisplay, map);
                     }
@@ -525,13 +596,24 @@ var roundtripMap = {
             });
         }
 
-        //if (status === google.maps.DirectionsStatus.OK) {
-        //    directionsDisplay.setDirections(response);
-        //    directionsDisplay.setOptions({polylineOptions: polyline});
-        //    showSteps(response, markerArray, stepDisplay, map);
-        //} else {
-        //    window.alert('Directions request failed due to ' + status);
-        //}
+
+        function renderDirectionsPolylines(response) {
+            var legs = response.routes[0].legs;
+            for (i = 0; i < legs.length; i++) {
+                var steps = legs[i].steps;
+                for (j = 0; j < steps.length; j++) {
+                    var nextSegment = steps[j].path;
+                    var stepPolyline = new google.maps.Polyline(polylineOptions);
+                    if (steps[j].travel_mode == google.maps.TravelMode.WALKING) {
+                        stepPolyline.setOptions(walkingPolylineOptions)
+                    }
+                    for (k = 0; k < nextSegment.length; k++) {
+                        stepPolyline.getPath().push(nextSegment[k]);
+                    }
+                    stepPolyline.setMap(map);
+                }
+            }
+        }
 
         function showSteps(directionResult, markerArray, stepDisplay, map) {
             // For each step, place a marker, and add the text to the marker's infowindow.
@@ -556,15 +638,33 @@ var roundtripMap = {
             });
         }
 
-        //google.maps.event.addListener(directionsDisplay,'routeindex_changed',function(){
-        //    //current routeIndex
-        //    console.log(this.getRouteIndex());
-        //    //current route
-        //    console.log(this.getDirections().routes[this.getRouteIndex()]);
-        //});
 
         window.draw_bustrain_line = draw_bustrain_line
         window.change_route_by_type = change_route_by_type
+
+
+        //iconSequence must be a single instance of google.maps.IconSequence object
+        google.maps.DirectionsRenderer.prototype.setDottedPolylineOptions = function (iconSequence) {
+            //need a reference to the current 'this' object
+            var obj = this;
+            //in case this DirectionsRenderer's directions were just set an instant ago,
+            //need a slight delay before we may access the j.polylines property of this object
+            window.setTimeout(function () {
+                console.log("override prototype")
+                var i,
+                    lines = obj.j.polylines,
+                    len = lines.length;
+                for (i = 0; i < len; i++) {
+                    if (lines[i].icons) {
+                        lines[i].setOptions(
+                            {
+                                icons: [iconSequence]
+                            }
+                        );
+                    }
+                }
+            },1);
+        };
 
 
     }
