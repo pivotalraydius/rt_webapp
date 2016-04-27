@@ -34,6 +34,7 @@ var roundtripMap = {
 
 
         var directions = [];
+        var instructios = [];
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
         directionsDisplay.setMap(handler.getMap());
@@ -376,7 +377,13 @@ var roundtripMap = {
                         for (var i = 0; i < directions.length; i++)
                             directions[i].setMap(null);
                     }
+                    if (instructios && instructios.length > 0){
+                        for (var i =0; i < instructios.length; i++)
+                        instructios[i].setPanel(null);
+                    }
                     directions = [];
+                    instructios = [];
+
 
                     calculateAndDisplayRoute(directionsService, markerArray, stepDisplay, map, true, "SUBWAY");
 
@@ -515,13 +522,16 @@ var roundtripMap = {
         }
 
         function draw_bustrain_line(obj){
-            route = $(obj).attr('data-route-legs');
-            time = $(obj).attr('data-route-total-estimated-time');
-            price = $(obj).attr('data-route-total-transit-price');
-            console.log("get route");
-            console.log(route)
-            console.log(time)
-            console.log(price)
+            //route = $(obj).attr('data-route-legs');
+            //time = $(obj).attr('data-route-total-estimated-time');
+            //price = $(obj).attr('data-route-total-transit-price');
+            //console.log("get route");
+            //console.log(route)
+            //console.log(time)
+            //console.log(price)
+
+            //$("#myTabContent").hide();
+            //$("#route_instruction_wrapper").show();
 
         }
 
@@ -529,6 +539,7 @@ var roundtripMap = {
         function calculateAndDisplayRoute(directionsService,markerArray, stepDisplay, map, is_transit, transit_mode) {
             //var selectedMode = "TRANSIT";
             // First, remove any existing markers from the map.
+            $("#route_instruction_wrapper").html("")
             for (var i = 0; i < markerArray.length; i++) {
                 markerArray[i].setMap(null);
             }
@@ -560,40 +571,12 @@ var roundtripMap = {
                 console.log(response)
                 console.log(response.routes[0])
 
-                var polyline = new google.maps.Polyline({
-                    strokeColor: '#6855C9',
-                    strokeOpacity: 1,
-                    strokeWeight: 7
-                });
-
-
-                var renderer = new google.maps.DirectionsRenderer({
-                    suppressPolylines: true,
-                    polylineOptions: {
-                        strokeColor: '#6855C9',
-                        strokeOpacity: 0,
-                        strokeWeight: 1,
-                        routeIndex: i,
-                        icons: [{
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                fillColor: '#6855C9',
-                                scale: 3,
-                                strokeOpacity: 1
-                            },
-                            offset: '0',
-                            repeat: '15px'
-                        }]
-                    }
-                });
-
-
                 var iconSequence = {
                     icon: {
                         fillColor: '#6855C9', //or hexadecimal color such as: '#FF0000'
                         fillOpacity: 0.8,
                         scale: 3,
-                        strokeColor: '6855C9',
+                        strokeColor: '#6855C9',
                         strokeWeight: 1,
                         strokeOpacity: 0.8,
                         path: google.maps.SymbolPath.CIRCLE
@@ -610,6 +593,7 @@ var roundtripMap = {
                         //renderDirectionsPolylines(response);
 
                         directions.push(new google.maps.DirectionsRenderer({
+                            panel: document.getElementById('route_instruction_wrapper'),
                             map: map,
                             directions: response,
                             routeIndex: i,
@@ -622,6 +606,8 @@ var roundtripMap = {
                             suppressMarkers: true
                         }));
 
+                        var transitLayer = new google.maps.TransitLayer();
+                        transitLayer.setMap(map);
 
                         //showSteps(response, markerArray, stepDisplay, map);
                     }
@@ -635,23 +621,6 @@ var roundtripMap = {
         }
 
 
-        function renderDirectionsPolylines(response) {
-            var legs = response.routes[0].legs;
-            for (i = 0; i < legs.length; i++) {
-                var steps = legs[i].steps;
-                for (j = 0; j < steps.length; j++) {
-                    var nextSegment = steps[j].path;
-                    var stepPolyline = new google.maps.Polyline(polylineOptions);
-                    if (steps[j].travel_mode == google.maps.TravelMode.WALKING) {
-                        stepPolyline.setOptions(walkingPolylineOptions)
-                    }
-                    for (k = 0; k < nextSegment.length; k++) {
-                        stepPolyline.getPath().push(nextSegment[k]);
-                    }
-                    stepPolyline.setMap(map);
-                }
-            }
-        }
 
         function showSteps(directionResult, markerArray, stepDisplay, map) {
             // For each step, place a marker, and add the text to the marker's infowindow.
