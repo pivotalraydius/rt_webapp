@@ -447,8 +447,6 @@ var roundtripMap = {
         //}
 
 
-
-
         function change_route_by_type(obj){
 
             type = $(obj).attr('data-type');
@@ -615,8 +613,6 @@ var roundtripMap = {
                     window.alert('Directions request failed due to ' + status);
                 }
 
-
-
             });
         }
 
@@ -648,7 +644,6 @@ var roundtripMap = {
 
         window.draw_bustrain_line = draw_bustrain_line
         window.change_route_by_type = change_route_by_type
-
 
         //iconSequence must be a single instance of google.maps.IconSequence object
         google.maps.DirectionsRenderer.prototype.setDottedPolylineOptions = function (iconSequence) {
