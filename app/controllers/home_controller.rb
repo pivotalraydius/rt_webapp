@@ -153,6 +153,12 @@ class HomeController < ApplicationController
         route.merge!(drivingHash)
       end
 
+
+      ncd_price = 0.0
+      enl_price = 0.0
+      ew_ns_lrt = 0.0
+      nel_ccl_dtl = 0.0
+
       steps = route[:legs][0][:steps]
       steps.each_with_index do |step,s_index|
 
@@ -168,55 +174,53 @@ class HomeController < ApplicationController
 
           if vehicle[:type] == "SUBWAY"
 
-            if station ==  "NE" || station == "CC" || station == "DT"
-              # p "calculate price based on NE CC DT"
-              if step_distance >= 40.2
-                price1 =  2.28
-              else
-
-                CSV.foreach("db/NE-CC-DT.csv") do |row|
-                  range = row[0]
-                  num1= range.match(",").pre_match.to_f
-                  num2= range.match(",").post_match.to_f
-
-                  if step_distance.between?(num1,num2)
-                    price1 =  (row[1].to_i* 0.01)
-                    price1 =   price1.round(2)
-                  end
-
-                end
-
-              end
-
-              tempPrice1[:estimate_price] = price1
-              step[:distance].merge!(tempPrice1)
-              p price1
-
+            p "smrt station"
+            station = step[:transit_details][:line][:name]
+            if station ==  "North East Line" || station == "Circle Line" || station == "Downtown Line"
+              p "station with NE CC DT"
+              p station
+              p step[:distance][:value]
+              nel_ccl_dtl = nel_ccl_dtl + step[:distance][:value]* 0.001
             else
-              # p "calculate price based on NS EW BPLRT SPLRT"
-              if step_distance >= 40.2
-                price2 =  2.03
+              p "station with EW NS LRT"
+              p station
+              p step[:distance][:value]
+              ew_ns_lrt = ew_ns_lrt + step[:distance][:value]* 0.001
+            end
 
-              else
-                CSV.foreach("db/NS-EW-LRT.csv") do |row|
-                  range = row[0]
-                  num1= range.match(",").pre_match.to_f
-                  num2= range.match(",").post_match.to_f
+            if nel_ccl_dtl >= 40.2
+              ncd_price =  2.28
+            elsif nel_ccl_dtl > 0
+              CSV.foreach("db/NE-CC-DT.csv") do |row|
+                range = row[0]
+                num1= range.match(",").pre_match.to_f
+                num2= range.match(",").post_match.to_f
 
-                  if step_distance.between?(num1,num2)
-
-                    price2 =  (row[1].to_i* 0.01)
-                    price2=  price2.round(2)
-                  end
-
+                if nel_ccl_dtl.between?(num1,num2)
+                  p "ncd_price"
+                  p ncd_price =  (row[1].to_i* 0.01)
                 end
 
               end
-              tempPrice2[:estimate_price] = price2
-              step[:distance].merge!(tempPrice2)
-              p price2
-
             end
+
+            if ew_ns_lrt >= 40.2
+              enl_price =  2.03
+
+            elsif ew_ns_lrt > 0
+              CSV.foreach("db/NS-EW-LRT.csv") do |row|
+                range = row[0]
+                num1= range.match(",").pre_match.to_f
+                num2= range.match(",").post_match.to_f
+
+                if ew_ns_lrt.between?(num1,num2)
+                  p "enl_price"
+                  p enl_price =  (row[1].to_i* 0.01)
+                end
+
+              end
+            end
+
           else
             # p "bus number"
             # p station
@@ -244,13 +248,7 @@ class HomeController < ApplicationController
             p price3
           end
 
-          totalprice = price1 + price2 + price3
-          totalprice = totalprice.round(2)
-          priceHash = Hash.new
-          p priceHash[:total_transit_price] = totalprice
-          p "merge to route total price"
-          p  totalprice
-          route.merge!(priceHash)
+
 
         elsif step[:travel_mode] == "DRIVING"
 
@@ -265,6 +263,14 @@ class HomeController < ApplicationController
 
           total_frist_walking_and_transit = 0.0
         end
+
+        totalprice = ncd_price + enl_price + price3
+        totalprice = totalprice.round(2)
+        priceHash = Hash.new
+        p priceHash[:total_transit_price] = totalprice
+        p "merge to route total price"
+        p  totalprice
+        route.merge!(priceHash)
 
       end
 
