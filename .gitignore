@@ -39,3 +39,4 @@ pickle-email-*.html
 .DS_Store
 /gems/*
 .idea/*
+/.idea/*
