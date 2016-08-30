@@ -1,5 +1,4 @@
 var roundtripMap = {
-
     init: function() {
         var key_suggestions = [];
         var $addinput;
@@ -647,7 +646,6 @@ var roundtripMap = {
 
         //iconSequence must be a single instance of google.maps.IconSequence object
         google.maps.DirectionsRenderer.prototype.setDottedPolylineOptions = function (iconSequence) {
-            //need a reference to the current 'this' object
             var obj = this;
             //in case this DirectionsRenderer's directions were just set an instant ago,
             //need a slight delay before we may access the j.polylines property of this object
@@ -667,12 +665,7 @@ var roundtripMap = {
                 }
             },1);
         };
-
-
     }
-
-
-
 
 }
 
