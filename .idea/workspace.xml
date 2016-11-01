@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87772165-a864-4a29-8329-1c0888b6971f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" afterPath="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" afterPath="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
     </list>
     <ignored path="rt_webapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -82,10 +79,10 @@
       <file leaf-file-name="application.html.haml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3603034">
-              <caret line="15" column="201" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="201" />
+            <state vertical-scroll-proportion="0.7206068">
+              <caret line="30" column="82" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
               <folding>
-                <marker date="1477985902000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
+                <marker date="1477986216000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
               </folding>
             </state>
           </provider>
@@ -178,7 +175,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="1489" />
+    <option name="width" value="1885" />
     <option name="height" value="1341" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -741,10 +738,10 @@
     <option name="totallyTimeSpent" value="14604000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1489" height="1341" extended-state="0" />
+    <frame x="0" y="23" width="1885" height="1341" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3009034" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23596731" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -850,7 +847,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
-            <marker date="1477985902000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
+            <marker date="1477986216000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
           </folding>
         </state>
       </provider>
@@ -1182,10 +1179,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3603034">
-          <caret line="15" column="201" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="201" />
+        <state vertical-scroll-proportion="0.7206068">
+          <caret line="30" column="82" selection-start-line="30" selection-start-column="11" selection-end-line="30" selection-end-column="11" />
           <folding>
-            <marker date="1477985902000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
+            <marker date="1477986216000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
           </folding>
         </state>
       </provider>
