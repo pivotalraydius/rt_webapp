@@ -10,13 +10,19 @@
           %td{:style => "position:relative", :valign => "center"}
             -is_walking = true
             -route[:legs][0][:steps].each do  |step|
+              -#=step[:travel_mode]
               -if step[:travel_mode] == "DRIVING"
                 -is_walking = false
                 -is_taxi = true
 
+
+
+
               -if step[:travel_mode] == "WALKING"
                 .bustrain_0{:style => "width:10px; height:15px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                   .walk1{:style => "width:10px;height:15px;position:absolute;top:0px; left:0px;"}
+
+
 
               -if step[:travel_mode] == "TRANSIT"
                 -is_walking = false

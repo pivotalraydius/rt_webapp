@@ -158,6 +158,7 @@ class HomeController < ApplicationController
       enl_price = 0.0
       ew_ns_lrt = 0.0
       nel_ccl_dtl = 0.0
+      bus_distance = 0.0
 
       steps = route[:legs][0][:steps]
       steps.each_with_index do |step,s_index|
@@ -169,84 +170,98 @@ class HomeController < ApplicationController
 
         if step[:travel_mode] == "TRANSIT"
           vehicle = step[:transit_details][:line][:vehicle]
-          station = step[:transit_details][:line][:short_name]
+          station = step[:transit_details][:line][:name]
           step_distance = (step[:distance][:value]* 0.001).round(1)
 
           if vehicle[:type] == "SUBWAY"
-
-            p "smrt station"
-            station = step[:transit_details][:line][:name]
             if station ==  "North East Line" || station == "Circle Line" || station == "Downtown Line"
-              p "station with NE CC DT"
-              p station
-              p step[:distance][:value]
-              nel_ccl_dtl = nel_ccl_dtl + step[:distance][:value]* 0.001
+              p "NE | CC | DTL "
+              p nel_ccl_dtl = nel_ccl_dtl + step[:distance][:value]
             else
-              p "station with EW NS LRT"
-              p station
-              p step[:distance][:value]
-              ew_ns_lrt = ew_ns_lrt + step[:distance][:value]* 0.001
+              p "EW | NS | LRT "
+              p ew_ns_lrt = ew_ns_lrt + step[:distance][:value]
             end
-
-            if nel_ccl_dtl >= 40.2
-              ncd_price =  2.28
-            elsif nel_ccl_dtl > 0
-              CSV.foreach("db/NE-CC-DT.csv") do |row|
-                range = row[0]
-                num1= range.match(",").pre_match.to_f
-                num2= range.match(",").post_match.to_f
-
-                if nel_ccl_dtl.between?(num1,num2)
-                  p "ncd_price"
-                  p ncd_price =  (row[1].to_i* 0.01)
-                end
-
-              end
-            end
-
-            if ew_ns_lrt >= 40.2
-              enl_price =  2.03
-
-            elsif ew_ns_lrt > 0
-              CSV.foreach("db/NS-EW-LRT.csv") do |row|
-                range = row[0]
-                num1= range.match(",").pre_match.to_f
-                num2= range.match(",").post_match.to_f
-
-                if ew_ns_lrt.between?(num1,num2)
-                  p "enl_price"
-                  p enl_price =  (row[1].to_i* 0.01)
-                end
-
-              end
-            end
-
           else
-            # p "bus number"
-            # p station
-            # p "calculate price based on buses"
-            if step_distance >= 40.2
-              price3 =  2.03
-            else
-
-              CSV.foreach("db/sms-bus.csv") do |row|
-                range = row[0]
-                num1= range.match(",").pre_match.to_f
-                num2= range.match(",").post_match.to_f
-
-                if step_distance.between?(num1,num2)
-
-                  price3 =  (row[1].to_i* 0.01)
-                  price3 = price3.round(2)
-                end
-
-              end
-
-            end
-            tempPrice3[:estimate_price] = price3
-            step[:distance].merge!(tempPrice3)
-            p price3
+            p "Bus"
+            p bus_distance = step[:distance][:value]
           end
+
+
+          # if vehicle[:type] == "SUBWAY"
+          #
+          #   p "smrt station"
+          #   station = step[:transit_details][:line][:name]
+          #   if station ==  "North East Line" || station == "Circle Line" || station == "Downtown Line"
+          #     p "station with NE CC DT"
+          #     p station
+          #     p step[:distance][:value]
+          #     nel_ccl_dtl = nel_ccl_dtl + step[:distance][:value]* 0.001
+          #   else
+          #     p "station with EW NS LRT"
+          #     p station
+          #     p step[:distance][:value]
+          #     ew_ns_lrt = ew_ns_lrt + step[:distance][:value]* 0.001
+          #   end
+          #
+          #   if nel_ccl_dtl >= 40.2
+          #     ncd_price =  2.28
+          #   elsif nel_ccl_dtl > 0
+          #     CSV.foreach("db/NE-CC-DT.csv") do |row|
+          #       range = row[0]
+          #       num1= range.match(",").pre_match.to_f
+          #       num2= range.match(",").post_match.to_f
+          #
+          #       if nel_ccl_dtl.between?(num1,num2)
+          #         p "ncd_price"
+          #         p ncd_price =  (row[1].to_i* 0.01)
+          #       end
+          #
+          #     end
+          #   end
+          #
+          #   if ew_ns_lrt >= 40.2
+          #     enl_price =  2.03
+          #
+          #   elsif ew_ns_lrt > 0
+          #     CSV.foreach("db/NS-EW-LRT.csv") do |row|
+          #       range = row[0]
+          #       num1= range.match(",").pre_match.to_f
+          #       num2= range.match(",").post_match.to_f
+          #
+          #       if ew_ns_lrt.between?(num1,num2)
+          #         p "enl_price"
+          #         p enl_price =  (row[1].to_i* 0.01)
+          #       end
+          #
+          #     end
+          #   end
+          #
+          # else
+          #   # p "bus number"
+          #   # p station
+          #   # p "calculate price based on buses"
+          #   if step_distance >= 40.2
+          #     price3 =  2.03
+          #   else
+          #
+          #     CSV.foreach("db/sms-bus.csv") do |row|
+          #       range = row[0]
+          #       num1= range.match(",").pre_match.to_f
+          #       num2= range.match(",").post_match.to_f
+          #
+          #       if step_distance.between?(num1,num2)
+          #
+          #         price3 =  (row[1].to_i* 0.01)
+          #         price3 = price3.round(2)
+          #       end
+          #
+          #     end
+          #
+          #   end
+          #   tempPrice3[:estimate_price] = price3
+          #   step[:distance].merge!(tempPrice3)
+          #   p price3
+          # end
 
 
 
@@ -264,13 +279,8 @@ class HomeController < ApplicationController
           total_frist_walking_and_transit = 0.0
         end
 
-        totalprice = ncd_price + enl_price + price3
-        totalprice = totalprice.round(2)
-        priceHash = Hash.new
-        p priceHash[:total_transit_price] = totalprice
-        p "merge to route total price"
-        p  totalprice
-        route.merge!(priceHash)
+
+
 
       end
 
@@ -278,6 +288,14 @@ class HomeController < ApplicationController
       tempTime[:total_estimated_time] = @total_estimated_time
 
       route.merge!(tempTime)
+
+      fare = calculate_transit_fare(ew_ns_lrt,nel_ccl_dtl,bus_distance)
+
+      priceHash = Hash.new
+      priceHash[:total_transit_price] = fare
+      p "merge to route total price"
+      p  fare
+      route.merge!(priceHash)
 
 
     end
@@ -416,6 +434,45 @@ class HomeController < ApplicationController
   end
 
   def street
+
+  end
+
+  def calculate_transit_fare(smrt, sbs, bus)
+
+    total_distance = (smrt + sbs + bus) * 0.001
+    compare_distance = []
+    p 'compare_distance'
+    p compare_distance.push(smrt,sbs,bus)
+    max_distance = compare_distance.max
+    p "look up price table"
+    if max_distance == smrt
+      p "SMRT"
+      price_table = "db/NS-EW-LRT.csv"
+      total_fare = 2.03 if total_distance >= 40.2
+    elsif max_distance == sbs
+      p "SBS"
+      price_table = "db/NE-CC-DT.csv"
+      total_fare = 2.28 if total_distance >= 40.2
+    else
+      p "BUS"
+      total_fare = 2.03 if total_distance >= 40.2
+      price_table = "db/sms-bus.csv"
+    end
+
+
+    if total_distance > 0
+      CSV.foreach(price_table) do |row|
+        range = row[0]
+        num1= range.match(",").pre_match.to_f
+        num2= range.match(",").post_match.to_f
+
+        if total_distance.between?(num1,num2)
+          total_fare =  (row[1].to_i* 0.01)
+        end
+      end
+    end
+
+    total_fare.round(2)
 
   end
 

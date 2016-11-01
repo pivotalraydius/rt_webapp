@@ -35,27 +35,25 @@
                       %b
                 -#-if line[:vehicle][:name] == "Subway"
                 -#  =line[:short_name]
-                -if line[:vehicle][:name] == "Subway" and line[:short_name]=="NS"
+                -if line[:vehicle][:name] == "Subway" and line[:name]=="North South Line"
                   .bustrain_0{:style => "width:45px; height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                     .nsl1{:style => "width:45px;height:19px;position:absolute;top:0px; left:0px;"}
 
-                -if line[:vehicle][:name] == "Subway" and line[:short_name]=="NE"
+                -if line[:vehicle][:name] == "Subway" and line[:name]=="North East Line"
                   .bustrain_0{:style => "width:45px; height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                     .nel1{:style => "width:45px;height:19px;position:absolute;top:0px; left:0px;"}
 
-                -if line[:vehicle][:name] == "Subway" and line[:short_name]=="CC"
+                -if line[:vehicle][:name] == "Subway" and line[:name]=="Circle Line"
                   .bustrain_0{:style => "width:45px; height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                     .ccl1{:style => "width:45px;height:19px;position:absolute;top:0px; left:0px;"}
 
-                -if line[:vehicle][:name] == "Subway" and line[:short_name]=="DT"
+                -if line[:vehicle][:name] == "Subway" and line[:name]=="Downtown Line"
                   .bustrain_0{:style => "width:45px; height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                     .lrt1{:style => "width:45px;height:19px;position:absolute;top:0px; left:0px;"}
 
-                -if line[:vehicle][:name] == "Subway" and line[:short_name]=="EW"
+                -if line[:vehicle][:name] == "Subway" and line[:name]=="East West Line"
                   .bustrain_0{:style => "width:45px; height:19px;overflow: hidden; position:relative;float:left;margin-right:5px;"}
                     .ewl1{:style => "width:45px;height:19px;position:absolute;top:0px; left:0px;"}
-
-
 
 
             -#.bustrain_0{:style => "width:10px; height:15px;overflow: hidden; position:relative;float:left;margin-right:5px;"}

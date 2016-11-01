@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87772165-a864-4a29-8329-1c0888b6971f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/home_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" afterPath="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" afterPath="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
     </list>
     <ignored path="rt_webapp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,13 +27,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="favicon.ico" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/favicon.ico">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="home.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.scss">
           <provider selected="true" editor-type-id="text-editor">
@@ -43,24 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html.haml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
-              <folding>
-                <marker date="1461735667000" expanded="true" signature="6901:6927" placeholder="{...}" />
-                <marker date="1461735667000" expanded="true" signature="6901:6931" placeholder="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="_fastest_transit_info.html.haml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="41" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="41" />
+            <state vertical-scroll-proportion="-11.083333">
+              <caret line="61" column="30" selection-start-line="41" selection-start-column="16" selection-end-line="61" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -69,8 +50,8 @@
       <file leaf-file-name="_cheapest_transit_info.html.haml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="54" column="11" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
+            <state vertical-scroll-proportion="-2.7142856">
+              <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -79,9 +60,11 @@
       <file leaf-file-name="home_controller.rb" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="152" column="59" selection-start-line="152" selection-start-column="33" selection-end-line="152" selection-end-column="33" />
-              <folding />
+            <state vertical-scroll-proportion="-21.53125">
+              <caret line="414" column="57" selection-start-line="414" selection-start-column="32" selection-end-line="414" selection-end-column="32" />
+              <folding>
+                <element signature="e#13054#14025#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,11 +82,21 @@
       <file leaf-file-name="application.html.haml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23631841">
+            <state vertical-scroll-proportion="0.3603034">
               <caret line="15" column="201" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="201" />
               <folding>
-                <marker date="1472550426000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
+                <marker date="1477985902000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="map.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/assets/javascripts/map.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="76" column="45" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="45" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -122,8 +115,21 @@
         <entry file="file://$PROJECT_DIR$/Gemfile">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+              <caret line="36" column="47" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html.haml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.785714">
+              <caret line="81" column="27" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="43" />
+              <folding>
+                <marker date="1461735667000" expanded="true" signature="6901:6927" placeholder="{...}" />
+                <marker date="1461735667000" expanded="true" signature="6901:6931" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -155,12 +161,12 @@
         <option value="$PROJECT_DIR$/app/assets/stylesheets/gola.scss" />
         <option value="$PROJECT_DIR$/app/controllers/api/roundtrip_controller.rb" />
         <option value="$PROJECT_DIR$/app/views/home/_routeheader.html.haml" />
-        <option value="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.haml" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/home.scss" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/map.js" />
-        <option value="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
+        <option value="$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml" />
+        <option value="$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.haml" />
       </list>
     </option>
@@ -172,7 +178,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
-    <option name="width" value="2560" />
+    <option name="width" value="1489" />
     <option name="height" value="1341" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -200,9 +206,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="RailsProjectView" />
       <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="RailsProjectView" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -509,7 +515,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="appli&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/app/views/layouts/application.html.haml&#10;appl&#9;ACTION&#9;ChangesView.ApplyPatch&#10;app&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/app/views/layouts/application.html.haml&#10;gem&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/Gemfile&#10;ge&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/Gemfile&#10;map&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/app/assets/javascripts/map.js&#10;route&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/config/routes.rb&#10;rout&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/config/routes.rb" />
+    <property name="SearchEverywhereHistoryKey" value="app&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/app/views/layouts/application.html.haml&#10;ge&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/Gemfile&#10;appli&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/app/views/layouts/application.html.haml&#10;appl&#9;ACTION&#9;ChangesView.ApplyPatch&#10;gem&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/Gemfile&#10;map&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/app/assets/javascripts/map.js&#10;route&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/config/routes.rb&#10;rout&#9;FILE&#9;file:///Users/RSEnterprise/Workspace/rt_webapp/config/routes.rb" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -517,16 +523,16 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/assets/images" />
-      <recent name="$PROJECT_DIR$/app/assets/javascripts" />
-      <recent name="$PROJECT_DIR$/app/assets/stylesheets" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/assets/images" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts" />
       <recent name="$PROJECT_DIR$/db" />
       <recent name="$PROJECT_DIR$/app/controllers/api" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/images" />
+      <recent name="$PROJECT_DIR$/app/assets/javascripts" />
+      <recent name="$PROJECT_DIR$/app/assets/stylesheets" />
     </key>
   </component>
   <component name="RunManager" selected="Rails.Development: rt_webapp">
@@ -735,13 +741,14 @@
     <option name="totallyTimeSpent" value="14604000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="2560" height="1341" extended-state="6" />
+    <frame x="0" y="23" width="1489" height="1341" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28366533" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3009034" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32806325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -754,7 +761,6 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985073" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282365" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -798,24 +804,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="102" selection-start-line="12" selection-start-column="80" selection-end-line="12" selection-end-column="80" />
-          <folding>
-            <marker date="1472550426000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/home.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -862,7 +850,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding>
-            <marker date="1472550426000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
+            <marker date="1477985902000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
           </folding>
         </state>
       </provider>
@@ -1089,18 +1077,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/map.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="625" column="87" selection-start-line="625" selection-start-column="87" selection-end-line="625" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/application.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1108,7 +1088,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1119,10 +1098,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/public/favicon.ico">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="142" column="16" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/api/roundtrip_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="45" selection-start-line="76" selection-start-column="34" selection-end-line="76" selection-end-column="45" />
           <folding />
         </state>
       </provider>
@@ -1138,20 +1138,25 @@
     <entry file="file://$PROJECT_DIR$/Gemfile">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <caret line="36" column="47" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/favicon.ico">
-      <provider selected="true" editor-type-id="images">
-        <state />
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.53125">
+          <caret line="414" column="57" selection-start-line="414" selection-start-column="32" selection-end-line="414" selection-end-column="32" />
+          <folding>
+            <element signature="e#13054#14025#0" expanded="false" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/index.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
+        <state vertical-scroll-proportion="-12.785714">
+          <caret line="81" column="27" selection-start-line="81" selection-start-column="22" selection-end-line="81" selection-end-column="43" />
           <folding>
             <marker date="1461735667000" expanded="true" signature="6901:6927" placeholder="{...}" />
             <marker date="1461735667000" expanded="true" signature="6901:6931" placeholder="{...}" />
@@ -1161,26 +1166,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/home/_fastest_transit_info.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="41" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="41" />
+        <state vertical-scroll-proportion="-11.083333">
+          <caret line="61" column="30" selection-start-line="41" selection-start-column="16" selection-end-line="61" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/home/_cheapest_transit_info.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="152" column="59" selection-start-line="152" selection-start-column="33" selection-end-line="152" selection-end-column="33" />
+        <state vertical-scroll-proportion="-2.7142856">
+          <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.haml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23631841">
+        <state vertical-scroll-proportion="0.3603034">
           <caret line="15" column="201" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="201" />
           <folding>
-            <marker date="1472550426000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
+            <marker date="1477985902000" expanded="true" signature="813:1008" placeholder="%script{:src =&gt; &quot;http://www.onemap.sg/API/JS/?accessKEY=QOx9UgNKNjiER7iyFHU7x0bH4D/N0S8mQNHmy2N2BwVbnl8qYI8UuWSPFg0vKI4cMQwXw4MbwczaHB7k/dUUuvSD3CUrOmIY|mv73ZvjFcSo=&quot;, :type =&gt; &quot;text/JavaScript&quot;}" />
           </folding>
         </state>
       </provider>
